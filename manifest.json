@@ -1,0 +1,10 @@
+{
+  "name": "Streamlit Core v1.0",
+  "id": "1143622264502622674",
+  "api": "1.0.0",
+  "main": "code.js",
+  "editorType": [
+    "figma"
+  ],
+  "ui": "ui.html"
+}
