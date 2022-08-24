@@ -17,39 +17,28 @@ const overrides: object[] = [];
 
 // Function to generate the markup for the selected item
 const generateMarkup = (component: any, props: any) => {
+  // Normalize the props into an object
+  const obj = Object.assign({}, ...props);
   
-  // TBD: More resilient code
-  const labelIndex = props.findIndex((prop: any) => prop.label !== undefined);
-  const valueIndex = props.findIndex((prop: any) => prop.value !== undefined);
-  const disabledIndex = props.findIndex((prop: any) => prop.disabled !== undefined);
-  let label;
-  let disabled;
-  let value;
-
-  if(labelIndex > -1) {
-    label = props.splice(labelIndex, 1);
-  }
+  // Destructure properties that go without keyword
+  const {label, value, disabled, ...rest} = obj;
+  let labelAndValue;
   
-  if(valueIndex > -1) {
-    value = props.splice(valueIndex, 1);
-  }
+  // If there's a value, concat it with the label
+  if(value) {
+    labelAndValue = `'${label}',
+    '${value}',`;
+  };
 
-  if(disabledIndex > -1) {
-    props.splice(disabledIndex, 1);
-    disabled = 'disabled=True';
+  const otherPropsMarkup = [];
+  for (const [key, value] of Object.entries(rest)) {
+    otherPropsMarkup.push(`${key}='${value}'`);
   }
 
   // The order for the parameters is important:
-  // For inputs, label goes first, value goes after,
+  // For inputs, label goes first, value goes after (if it exists),
   // Then all the other keyword arguments
-  const markup = `
-    ${component.name}(
-      ${label ? `'${Object.values(label[0])}',` : ''}
-      ${value ? `'${Object.values(value[0])}',` : ''}
-      ${disabled ? `${disabled},` : ''}
-      ${props.map((prop: any) => `${Object.keys(prop)}='${Object.values(prop)}', `).join('')}
-    )
-  `;
+  const markup = `${component.name}(${labelAndValue ? labelAndValue : `'${label}',`}${disabled ? `${'disabled=True,'}` : `${'disabled=False,'}`}${otherPropsMarkup.map((prop: any) => `${prop},`).join('')})`;
 
   return markup;
 }
@@ -112,15 +101,15 @@ const checkVisibility = (node: any) => {
 
 // Function to gather the values for the common props all our components have
 const getGlobalProps = (node: any) => {
-  
+
   // Get the component variants, since some of the arguments
   // are added there, such as "Disabled=True"
-  for (const property in node.variantProperties) {
-
+  for (const property in node.componentProperties) {
+    
     // Get all the possible variations and add them to the props object
     switch(property.toLowerCase()) {
       case 'disabled':
-        const isDisabled = node.variantProperties[property].toLowerCase() === 'true';
+        const isDisabled = node.componentProperties[property].value.toLowerCase() === 'true';
         if(isDisabled) overrides.push({ disabled: isDisabled });
         break;
     }
@@ -158,8 +147,8 @@ const getGlobalProps = (node: any) => {
 const traverse = (node: any) => {
 
   // If there are no childrens, that means we selected an empty element.
-  // If the node is not a component, throw an error to avoid funky behavior and edge cases.
-  if ("children" in node && node.type === "COMPONENT") {
+  // If the node is not an instance, throw an error to avoid funky behavior and edge cases.
+  if ("children" in node && node.type === "INSTANCE") {
     
     // Selection is valid, let's id the component!
     identifyComponent(node);
@@ -178,9 +167,9 @@ const traverse = (node: any) => {
 const identifyComponent = (node: any) => {
 
   // Get the parent's information
-  const parent = node.parent;
+  const parent = node.masterComponent;
   const component = {
-    name: parent.name,
+    name: node.name,
     description: parent.description,
     link: parent.documentationLinks[0].uri
   };
