@@ -4,6 +4,122 @@
 // This shows the HTML page in "ui.html".
 figma.showUI(__html__);
 
+// Initialize the object to hold the component global props.
+let globalProps: {
+  disabled?: boolean;
+  label: string,
+  help?: string;
+};
+
+// On this overrides array we'll collect the changes to make on globalProps,
+// based on what the user added/modified/removed from the Figma component
+const overrides: object[] = [];
+
+const generateMarkup = (component: any, props: any) => {
+  console.log(`Component data: ${component}`);
+  console.log(`Component props: ${props}`);
+}
+
+// Function to get the content for the visible node
+const getNodeContent = (item: any) => {
+
+  // Do different stuff based on the type of node
+  switch(item.type) {
+
+    // If text, easy peasy
+    case 'TEXT':
+      const name = item.name;
+      const content = item.content.characters;
+
+      overrides.push({
+        [name]: content
+      });
+      break;
+
+    // If a frame, auto layout, etc, get the text nodes inside of them
+    case 'FRAME':
+      const textNodes = item.content.findAllWithCriteria({ types: ['TEXT']})
+      textNodes.map((node: any) => {
+        const name = node.name.toLowerCase();
+        const content = node.characters;
+
+        overrides.push({
+          [name]: content
+        });
+      })
+      break;
+  }
+}
+
+// Function to check the node visibility
+const checkVisibility = (node: any) => {
+  
+  // First, we check if the current node we are traversing is visible
+  const isParentVisible = node.visible;
+
+  // If it is, then check its descendants, and return their name and visibility
+  if(isParentVisible) {
+    let nodeList: object[] = [];
+    
+    // TBD: More thorough check for label_visibility,
+    // and better handling for help tooltip group
+    node.children.map((children: any) => nodeList.push({
+      name: children.name.toLowerCase(),
+      visible: children.visible,
+      type: children.type,
+      content: children
+    }));
+
+    return nodeList;
+  } else {
+    return;
+  }
+}
+
+// Function to gather the values for the common props all our components have
+const getGlobalProps = (node: any) => {
+  
+  // Get the component variants, since some of the arguments
+  // are added there, such as "Disabled=True"
+  for (const property in node.variantProperties) {
+
+    // Get all the possible variations and add them to the props object
+    switch(property.toLowerCase()) {
+      case 'disabled':
+        const isDisabled = node.variantProperties[property].toLowerCase() === 'true';
+        if(isDisabled) overrides.push({ disabled: isDisabled });
+        break;
+    }
+  }
+
+  // After the variants, get the component children, and update values depending on its state and values
+  for (const index in node.children) {
+
+    // Check the visible attribute in Figma. If the group (or any of its children)
+    // is not visible, that means the user don't want those properties
+    // on their code, so we can exit the function and set them to false.
+    const nodeList = checkVisibility(node.children[index]);
+    nodeList?.map((item: any) => {
+      
+      // If the item is visible, let's get the content for it
+      if(item.visible === true) {
+        getNodeContent(item);
+      }
+
+      // If the label is invisible, set the override to an empty string
+      // TBD handle this with label_visibility once it ships
+      else if(item.visible === false && item.name === 'label') {
+        overrides.push({
+          label: ''
+        });
+      }
+      else {
+        return;
+      }
+    });
+  }
+};
+
 // Function to traverse the selected nodes and identify the widgets
 const traverse = (node: any) => {
 
@@ -12,29 +128,36 @@ const traverse = (node: any) => {
   if ("children" in node && node.type === "COMPONENT") {
     
     // Selection is valid, let's id the component!
-    identifyParentComponent(node.parent);
+    identifyComponent(node);
   } else {
 
     // Throw an error if invalid selection
     figma.ui.postMessage({
       type: 'error',
-      message: 'Invalid selection! Please select a component from the library to generate the code.'
+      message: 'Invalid selection! Please select a top-level component from the library to generate the code.'
     })
     return;
   };
 };
 
-// Function to identify the parent component and get its data
-const identifyParentComponent = (parent: any) => {
+// Function to identify the component and get its data
+const identifyComponent = (node: any) => {
+
+  // Get the parent's information
+  const parent = node.parent;
   const component = {
     name: parent.name,
     description: parent.description,
     link: parent.documentationLinks[0].uri
   };
 
-  // TBD: Create a function that will go through the selected component, check its properties,
-  // and render the proper code for it
-  // generateMarkup(parent);
+  // Go through the selected component and get its global properties
+  getGlobalProps(node);
+
+  // TBD: Get component-specific props
+
+  // TBD: Generate the markup for the component
+  generateMarkup(component, overrides);
 
   // Send a success message to the plugin with the data
   figma.ui.postMessage({
