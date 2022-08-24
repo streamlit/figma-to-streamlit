@@ -17,8 +17,41 @@ const overrides: object[] = [];
 
 // Function to generate the markup for the selected item
 const generateMarkup = (component: any, props: any) => {
-  console.log(`Component data:`, component);
-  console.log(`Component props:`, props);
+  
+  // TBD: More resilient code
+  const labelIndex = props.findIndex((prop: any) => prop.label !== undefined);
+  const valueIndex = props.findIndex((prop: any) => prop.value !== undefined);
+  const disabledIndex = props.findIndex((prop: any) => prop.disabled !== undefined);
+  let label;
+  let disabled;
+  let value;
+
+  if(labelIndex > -1) {
+    label = props.splice(labelIndex, 1);
+  }
+  
+  if(valueIndex > -1) {
+    value = props.splice(valueIndex, 1);
+  }
+
+  if(disabledIndex > -1) {
+    props.splice(disabledIndex, 1);
+    disabled = 'disabled=True';
+  }
+
+  // The order for the parameters is important:
+  // For inputs, label goes first, value goes after,
+  // Then all the other keyword arguments
+  const markup = `
+    ${component.name}(
+      ${label ? `'${Object.values(label[0])}',` : ''}
+      ${value ? `'${Object.values(value[0])}',` : ''}
+      ${disabled ? `${disabled},` : ''}
+      ${props.map((prop: any) => `${Object.keys(prop)}='${Object.values(prop)}', `).join('')}
+    )
+  `;
+
+  return markup;
 }
 
 // Function to get the content for the visible node
@@ -157,14 +190,15 @@ const identifyComponent = (node: any) => {
 
   // TBD: Get component-specific props
 
-  // TBD: Generate the markup for the component
-  generateMarkup(component, overrides);
+  // Generate the markup for the component
+  const markup = generateMarkup(component, overrides);
 
   // Send a success message to the plugin with the data
   figma.ui.postMessage({
     type: 'success',
     message: 'Nice one! Find the code snippet below 👇🏻',
     component,
+    markup
   });
 };
 
@@ -201,6 +235,6 @@ figma.ui.onmessage = msg => {
 
   // Make sure to close the plugin when you're done. Otherwise the plugin will
   // keep running, which shows the cancel button at the bottom of the screen.
-  // Commented out for now for easier development
+  // Commented out for now for easier development flow
   // figma.closePlugin();
 };
