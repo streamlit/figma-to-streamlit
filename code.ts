@@ -15,9 +15,10 @@ let globalProps: {
 // based on what the user added/modified/removed from the Figma component
 const overrides: object[] = [];
 
+// Function to generate the markup for the selected item
 const generateMarkup = (component: any, props: any) => {
-  console.log(`Component data: ${component}`);
-  console.log(`Component props: ${props}`);
+  console.log(`Component data:`, component);
+  console.log(`Component props:`, props);
 }
 
 // Function to get the content for the visible node
@@ -174,6 +175,8 @@ figma.ui.onmessage = msg => {
 
   // One way of distinguishing between different types of messages sent from
   // your HTML page is to use an object with a "type" property like this.
+
+  // If the type is 'identify-widget', then that's what we do!
   if (msg.type === 'identify-widget') {
     
     // If there's nothing selected, throw an error
@@ -190,7 +193,11 @@ figma.ui.onmessage = msg => {
         traverse(node);
       };
     };
-  };
+  }
+  // If the type is clean-old-data, then let's wipe the old overrides
+  else if(msg.type === 'clean-old-data') {
+    overrides.splice(0, overrides.length);
+  }
 
   // Make sure to close the plugin when you're done. Otherwise the plugin will
   // keep running, which shows the cancel button at the bottom of the screen.

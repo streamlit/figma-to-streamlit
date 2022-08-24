@@ -13,7 +13,8 @@
 
   // Onclick handler to get the code
   document.getElementById('generate').onclick = () => {
-    parent.postMessage({ pluginMessage: { type: 'identify-widget' } }, '*')
+    parent.postMessage({ pluginMessage: { type: 'clean-old-data' } }, '*');
+    parent.postMessage({ pluginMessage: { type: 'identify-widget' } }, '*');
   }
 
   // Check the data we are getting from the plugin
