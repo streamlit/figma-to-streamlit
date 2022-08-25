@@ -37,9 +37,11 @@ const generateMarkup = (component: any) => {
   // The order for the parameters is important:
   // For inputs, label goes first, value goes after (if it exists),
   // Then all the other keyword arguments
-  const markup = `${component.name}(${labelAndValue ? labelAndValue : `'${body}'`}${otherPropsMarkup.map((prop: any) => ` ${prop}`).join(', ')})`;
+  const rawMarkup = `${component.name}(${labelAndValue ? labelAndValue : `'${body}'`}${otherPropsMarkup.map((prop: any) => ` ${prop}`).join(', ')})`;
+  const styledMarkup = `<code>${component.name}(</code><code><span style="padding-left: 1rem; color: #FFA421;">${labelAndValue ? labelAndValue : `'${body}'`}</span></code>${otherPropsMarkup.map((prop: any) => `<code><span style="padding-left: 1rem; color: #FFA421;">${prop}</span><span style="color: #FFA421;">,</span></code>`).join('')})`;
 
-  component.markup = markup;
+  component.rawMarkup = rawMarkup;
+  component.styledMarkup = styledMarkup;
 
   return component;
 }
@@ -165,6 +167,9 @@ const traverse = (node: any) => {
     identifyComponent(node);
   } else {
 
+    // Make the ui taller
+    figma.ui.resize(300, 200);
+
     // Throw an error if invalid selection
     figma.ui.postMessage({
       type: 'error',
@@ -219,6 +224,10 @@ figma.ui.onmessage = msg => {
     
     // If there's nothing selected, throw an error
     if(!figma.currentPage.selection.length) {
+      
+      // Make the ui taller
+      figma.ui.resize(300, 200);
+
       figma.ui.postMessage({
         type: 'error',
         message: 'Nothing selected. Pick a component to get its code.'

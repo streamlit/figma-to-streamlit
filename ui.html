@@ -68,10 +68,15 @@
     margin-bottom: .25rem;
   }
 
-  .widget-information li code {
-    padding: 1rem;
-    display: block;
+  .widget-information li pre {
+    padding: 0 1rem;
     color: white;
+    white-space: break-spaces;
+    margin: 0;
+  }
+
+  .widget-information li pre code {
+    display: block;
     word-wrap: break-word;
   }
 
@@ -145,14 +150,14 @@
           <h2>${event.data.pluginMessage.component.name}</h2>
           <p class="description">${event.data.pluginMessage.component.description}</p>
           <div class="code-container">
-            <button onclick="${clickToCopy(event.data.pluginMessage.component.markup)}" class="click-to-copy" title="Click to copy!">
+            <button onclick="${clickToCopy(event.data.pluginMessage.component.rawMarkup)}" class="click-to-copy" title="Click to copy!">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5.51085 5.49983V4.51103C5.51085 3.40522 6.40861 2.50879 7.51605 2.50879H11.526C12.6335 2.50879 13.5312 3.40522 13.5312 4.51103V8.51551C13.5312 9.62131 12.6335 10.5177 11.526 10.5177H10.5778M8.54645 13.5088H4.53645C3.42901 13.5088 2.53125 12.6124 2.53125 11.5065V7.50207C2.53125 6.39626 3.42901 5.49983 4.53645 5.49983H8.54645C9.65389 5.49983 10.5516 6.39626 10.5516 7.50207V11.5065C10.5516 12.6124 9.65389 13.5088 8.54645 13.5088Z" stroke="#808495"/>
               </svg>
             </button>
-            <code>
-              ${event.data.pluginMessage.component.markup}
-            </code>
+            <pre>
+              ${event.data.pluginMessage.component.styledMarkup}
+            </pre>
           </div>
           <p class="documentation">
             Need more help? Check our docs for
