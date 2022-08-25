@@ -1,9 +1,106 @@
+<style>
+  body {
+    background-color: #262730;
+    margin: 0;
+  }
+
+  p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-weight: 300;
+    font-size: .75rem;
+    color: #BFC5D3;
+    padding: 0 .75rem;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .heading {
+    border-bottom: 1px solid #555867;
+  }
+
+  .main-title {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-weight: 600;
+    font-size: .75rem;
+    color: white;
+    padding: .75rem;
+    margin-bottom: 0;
+  }
+
+  .generate {
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    padding: .5rem;
+    border-radius: .25rem;
+    color: white;
+    border: 1px solid #808495;
+    font-size: .75rem;
+    margin: .75rem;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+  }
+
+  .generate:hover {
+    background-color: white;
+    color: #262730;
+  }
+
+  .message {
+    padding-bottom: .5rem;
+  }
+
+  .widget-information {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .widget-information li {
+    border-bottom: 1px solid #808495;
+  }
+
+  .widget-information li h2 {
+    font-family: monospace;
+    margin-bottom: 0;
+    color: white;
+    font-weight: 500;
+    font-size: .75rem;
+    padding: 0 .75rem;
+    margin-bottom: .25rem;
+  }
+
+  .widget-information li code {
+    padding: .75rem;
+    display: block;
+    color: white;
+    word-wrap: break-word;
+  }
+
+  .documentation {
+    padding-bottom: .75rem;
+  }
+
+  .documentation a {
+    color: #FF4B4B;
+  }
+
+  .documentation a:hover {
+    text-decoration: none;
+  }
+</style>
+
 <!-- Markup -->
-<h2><code>st.</code> command generator</h2>
-<p>Select a widget and hit "generate" below to get its code!</p>
-<button id="generate">Generate!</button>
-<div class="message" style="display: none;"></div>
-<ul class="widget-information" style="display: none;"></div>
+<main class="container">
+  <section class="heading">
+    <h1 class="main-title">Start building your app!</h1>
+    <p>Select a widget and hit "generate" below to get its code!</p>
+    <button class="generate" id="generate">See my code</button>
+    <p class="message" style="display: none;"></p>
+  </section>
+  <ul class="widget-information" style="display: none;"></div>
+</main>
 
 <!-- Interactivity -->
 <script>
@@ -30,18 +127,17 @@
         information.style.display = 'block';
         const container = document.createElement('li');
         container.innerHTML = `
-          <hr />
-          <h3>You selected: <span>${event.data.pluginMessage.component.name}</span></h3>
+          <h2>${event.data.pluginMessage.component.name}</h2>
           <p class="description">${event.data.pluginMessage.component.description}</p>
           <code>${event.data.pluginMessage.component.markup}</code>
           <p class="documentation">
-            Need more help? Check
+            Need more help? Check our docs for
             <a
               href="${event.data.pluginMessage.component.link}"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Our docs for this component
+              this component
             </a>.
           </p>
         `;

@@ -38,7 +38,6 @@ const generateMarkup = (component: any) => {
 // Function to get the content for the visible node
 const getNodeContent = (item: any, component: any) => {
   
-  console.log(item)
   // Do different stuff based on the type of node
   switch(item.type) {
 
@@ -152,7 +151,7 @@ const traverse = (node: any) => {
     // Throw an error if invalid selection
     figma.ui.postMessage({
       type: 'error',
-      message: 'Invalid selection! Please select a top-level component from the library to generate the code.'
+      message: '😬 Invalid selection. Please select an instance from the library to generate the code.'
     })
     return;
   };
@@ -202,7 +201,7 @@ figma.ui.onmessage = msg => {
     if(!figma.currentPage.selection.length) {
       figma.ui.postMessage({
         type: 'error',
-        message: 'Nothing selected! Please pick a component to get its code.'
+        message: 'Nothing selected. Pick a component to get its code.'
       });
       return;
     } else {
