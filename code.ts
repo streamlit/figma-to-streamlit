@@ -2,7 +2,7 @@
 // properties, from our existing component library
 
 // This shows the HTML page in "ui.html".
-figma.showUI(__html__);
+figma.showUI(__html__, { height: 135 });
 
 // Function to generate the markup for the selected item
 const generateMarkup = (component: any) => {
@@ -194,6 +194,9 @@ const identifyComponent = (node: any) => {
 
   // Generate the markup for the component
   const componentWithMarkup = generateMarkup(component);
+
+  // Make the ui taller
+  figma.ui.resize(300, 500);
 
   // Send a success message to the plugin with the data
   figma.ui.postMessage({
