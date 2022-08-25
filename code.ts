@@ -4,17 +4,6 @@
 // This shows the HTML page in "ui.html".
 figma.showUI(__html__);
 
-// Initialize the object to hold the component global props.
-let globalProps: {
-  disabled?: boolean;
-  label: string,
-  help?: string;
-};
-
-// On this overrides array we'll collect the changes to make on globalProps,
-// based on what the user added/modified/removed from the Figma component
-const overrides: object[] = [];
-
 // Function to generate the markup for the selected item
 const generateMarkup = (component: any) => {
   // Normalize the props into an object
@@ -222,7 +211,6 @@ figma.ui.onmessage = msg => {
   }
   // If the type is clean-old-data, then let's wipe the old overrides
   else if(msg.type === 'clean-old-data') {
-    overrides.splice(0, overrides.length);
     figma.ui.postMessage({
       type: 'cleanup',
     });
