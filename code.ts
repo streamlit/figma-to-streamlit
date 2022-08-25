@@ -37,17 +37,20 @@ const generateMarkup = (component: any) => {
 
 // Function to get the content for the visible node
 const getNodeContent = (item: any, component: any) => {
-
+  
+  console.log(item)
   // Do different stuff based on the type of node
   switch(item.type) {
 
     // If text, easy peasy
     case 'TEXT':
       const name = item.name;
+      const key = item.content.characters.replaceAll(' ', '-').toLowerCase();
       const content = item.content.characters;
 
       component.properties.push({
-        [name]: content
+        [name]: content,
+        key,
       });
       break;
 
