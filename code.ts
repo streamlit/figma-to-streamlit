@@ -16,9 +16,9 @@ let globalProps: {
 const overrides: object[] = [];
 
 // Function to generate the markup for the selected item
-const generateMarkup = (component: any, props: any) => {
+const generateMarkup = (component: any) => {
   // Normalize the props into an object
-  const obj = Object.assign({}, ...props);
+  const obj = Object.assign({}, ...component.properties);
   
   // Destructure properties that go without keyword
   const {label, value, disabled, ...rest} = obj;
@@ -26,8 +26,7 @@ const generateMarkup = (component: any, props: any) => {
   
   // If there's a value, concat it with the label
   if(value) {
-    labelAndValue = `'${label}',
-    '${value}',`;
+    labelAndValue = `'${label}','${value}',`;
   };
 
   // For the rest of the props (help, placeholder, etc),
@@ -42,11 +41,13 @@ const generateMarkup = (component: any, props: any) => {
   // Then all the other keyword arguments
   const markup = `${component.name}(${labelAndValue ? labelAndValue : `'${label}',`}${disabled ? `${'disabled=True,'}` : `${'disabled=False,'}`}${otherPropsMarkup.map((prop: any) => `${prop}`).join(',')})`;
 
-  return markup;
+  component.markup = markup;
+
+  return component;
 }
 
 // Function to get the content for the visible node
-const getNodeContent = (item: any) => {
+const getNodeContent = (item: any, component: any) => {
 
   // Do different stuff based on the type of node
   switch(item.type) {
@@ -56,7 +57,7 @@ const getNodeContent = (item: any) => {
       const name = item.name;
       const content = item.content.characters;
 
-      overrides.push({
+      component.properties.push({
         [name]: content
       });
       break;
@@ -68,7 +69,7 @@ const getNodeContent = (item: any) => {
         const name = node.name.toLowerCase();
         const content = node.characters;
 
-        overrides.push({
+        component.properties.push({
           [name]: content
         });
       })
@@ -102,7 +103,7 @@ const checkVisibility = (node: any) => {
 }
 
 // Function to gather the values for the common props all our components have
-const getGlobalProps = (node: any) => {
+const getGlobalProps = (node: any, component: any) => {
 
   // Get the component variants, since some of the arguments
   // are added there, such as "Disabled=True"
@@ -112,7 +113,7 @@ const getGlobalProps = (node: any) => {
     switch(property.toLowerCase()) {
       case 'disabled':
         const isDisabled = node.componentProperties[property].value.toLowerCase() === 'true';
-        if(isDisabled) overrides.push({ disabled: isDisabled });
+        if(isDisabled) component.properties.push({ disabled: isDisabled });
         break;
     }
   }
@@ -128,13 +129,13 @@ const getGlobalProps = (node: any) => {
       
       // If the item is visible, let's get the content for it
       if(item.visible === true) {
-        getNodeContent(item);
+        getNodeContent(item, component);
       }
 
       // If the label is invisible, set the override to an empty string
       // TBD handle this with label_visibility once it ships
       else if(item.visible === false && item.name === 'label') {
-        overrides.push({
+        component.properties.push({
           label: ''
         });
       }
@@ -173,23 +174,24 @@ const identifyComponent = (node: any) => {
   const component = {
     name: node.name,
     description: parent.description,
-    link: parent.documentationLinks[0].uri
+    link: parent.documentationLinks[0].uri,
+    properties: [],
+    markup: '',
   };
 
   // Go through the selected component and get its global properties
-  getGlobalProps(node);
+  getGlobalProps(node, component);
 
   // TBD: Get component-specific props
 
   // Generate the markup for the component
-  const markup = generateMarkup(component, overrides);
+  const componentWithMarkup = generateMarkup(component);
 
   // Send a success message to the plugin with the data
   figma.ui.postMessage({
     type: 'success',
     message: 'Nice one! Find the code snippet below 👇🏻',
-    component,
-    markup
+    component: componentWithMarkup,
   });
 };
 
@@ -212,7 +214,6 @@ figma.ui.onmessage = msg => {
       });
       return;
     } else {
-
       // Traverse the selected nodes and get their information
       for (const node of figma.currentPage.selection) {
         traverse(node);
@@ -222,6 +223,9 @@ figma.ui.onmessage = msg => {
   // If the type is clean-old-data, then let's wipe the old overrides
   else if(msg.type === 'clean-old-data') {
     overrides.splice(0, overrides.length);
+    figma.ui.postMessage({
+      type: 'cleanup',
+    });
   }
 
   // Make sure to close the plugin when you're done. Otherwise the plugin will

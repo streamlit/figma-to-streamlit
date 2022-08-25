@@ -3,7 +3,7 @@
 <p>Select a widget and hit "generate" below to get its code!</p>
 <button id="generate">Generate!</button>
 <div class="message" style="display: none;"></div>
-<div class="widget-information" style="display: none;"></div>
+<ul class="widget-information" style="display: none;"></div>
 
 <!-- Interactivity -->
 <script>
@@ -20,7 +20,6 @@
   // Check the data we are getting from the plugin
   onmessage = (event) => {
     switch(event.data.pluginMessage.type) {
-
       case 'success':
         // Show success message
         notification.style.display = 'block';
@@ -29,11 +28,12 @@
         
         // Add the markup for the component
         information.style.display = 'block';
-        information.innerHTML = `
+        const container = document.createElement('li');
+        container.innerHTML = `
           <hr />
           <h3>You selected: <span>${event.data.pluginMessage.component.name}</span></h3>
           <p class="description">${event.data.pluginMessage.component.description}</p>
-          <code>${event.data.pluginMessage.markup}</code>
+          <code>${event.data.pluginMessage.component.markup}</code>
           <p class="documentation">
             Need more help? Check
             <a
@@ -45,6 +45,7 @@
             </a>.
           </p>
         `;
+        information.appendChild(container);
 
         break;
 
@@ -53,6 +54,13 @@
         notification.style.display = 'block';
         notification.classList.add('error');
         notification.innerText = event.data.pluginMessage.message;
+        break;
+      
+        // Cleanup message
+      case 'cleanup':
+        notification.style.display = 'none';
+        information.innerHTML = '';
+        information.style.display = 'none';
         break;
     }
   }
