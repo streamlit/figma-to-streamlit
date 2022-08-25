@@ -10,17 +10,26 @@ const generateMarkup = (component: any) => {
   const obj = Object.assign({}, ...component.properties);
   
   // Destructure properties that go without keyword
-  const {label, value, disabled, ...rest} = obj;
+  const {label, value, disabled, body, ...rest} = obj;
   let labelAndValue;
+  const otherPropsMarkup = [];
   
+  // TBD: Better logic for this
   // If there's a value, concat it with the label
   if(value) {
     labelAndValue = `'${label}','${value}',`;
-  };
+  }
+  // If there's just a label, show that
+  else if(label) {
+    labelAndValue = `'${label}',`;
+  }
+
+  if(disabled && disabled === true) {
+    otherPropsMarkup.push('disabled=True');
+  }
 
   // For the rest of the props (help, placeholder, etc),
   // concat them using the keyword approach: key='value'
-  const otherPropsMarkup = [];
   for (const [key, value] of Object.entries(rest)) {
     otherPropsMarkup.push(`${key}='${value}'`);
   }
@@ -28,7 +37,7 @@ const generateMarkup = (component: any) => {
   // The order for the parameters is important:
   // For inputs, label goes first, value goes after (if it exists),
   // Then all the other keyword arguments
-  const markup = `${component.name}(${labelAndValue ? labelAndValue : `'${label}',`}${disabled ? `${'disabled=True,'}` : `${'disabled=False,'}`}${otherPropsMarkup.map((prop: any) => `${prop}`).join(',')})`;
+  const markup = `${component.name}(${labelAndValue ? labelAndValue : `'${body}'`}${otherPropsMarkup.map((prop: any) => ` ${prop}`).join(', ')})`;
 
   component.markup = markup;
 
@@ -44,12 +53,10 @@ const getNodeContent = (item: any, component: any) => {
     // If text, easy peasy
     case 'TEXT':
       const name = item.name;
-      const key = item.content.characters.replaceAll(' ', '-').toLowerCase();
       const content = item.content.characters;
 
       component.properties.push({
         [name]: content,
-        key,
       });
       break;
 
@@ -78,14 +85,23 @@ const checkVisibility = (node: any) => {
   if(isParentVisible) {
     let nodeList: object[] = [];
     
-    // TBD: More thorough check for label_visibility,
-    // and better handling for help tooltip group
-    node.children.map((children: any) => nodeList.push({
-      name: children.name.toLowerCase(),
-      visible: children.visible,
-      type: children.type,
-      content: children
-    }));
+    // If the node has no children, such as `st.title`, `st.text`, `st.subheader`, etc
+    if(!node.children) {
+      nodeList.push({
+        name: node.name.toLowerCase(),
+        visible: node.visible,
+        type: node.type,
+        content: node,
+      })
+    } else {
+      // TBD: More thorough check for label_visibility
+      node.children.map((children: any) => nodeList.push({
+        name: children.name.toLowerCase(),
+        visible: children.visible,
+        type: children.type,
+        content: children
+      }));
+    }
 
     return nodeList;
   } else {
@@ -104,7 +120,7 @@ const getGlobalProps = (node: any, component: any) => {
     switch(property.toLowerCase()) {
       case 'disabled':
         const isDisabled = node.componentProperties[property].value.toLowerCase() === 'true';
-        if(isDisabled) component.properties.push({ disabled: isDisabled });
+        component.properties.push({ disabled: isDisabled });
         break;
     }
   }
@@ -116,6 +132,7 @@ const getGlobalProps = (node: any, component: any) => {
     // is not visible, that means the user don't want those properties
     // on their code, so we can exit the function and set them to false.
     const nodeList = checkVisibility(node.children[index]);
+
     nodeList?.map((item: any) => {
       
       // If the item is visible, let's get the content for it
