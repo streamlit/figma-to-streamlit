@@ -30,6 +30,8 @@ const generateMarkup = (component: any, props: any) => {
     '${value}',`;
   };
 
+  // For the rest of the props (help, placeholder, etc),
+  // concat them using the keyword approach: key='value'
   const otherPropsMarkup = [];
   for (const [key, value] of Object.entries(rest)) {
     otherPropsMarkup.push(`${key}='${value}'`);
@@ -38,7 +40,7 @@ const generateMarkup = (component: any, props: any) => {
   // The order for the parameters is important:
   // For inputs, label goes first, value goes after (if it exists),
   // Then all the other keyword arguments
-  const markup = `${component.name}(${labelAndValue ? labelAndValue : `'${label}',`}${disabled ? `${'disabled=True,'}` : `${'disabled=False,'}`}${otherPropsMarkup.map((prop: any) => `${prop},`).join('')})`;
+  const markup = `${component.name}(${labelAndValue ? labelAndValue : `'${label}',`}${disabled ? `${'disabled=True,'}` : `${'disabled=False,'}`}${otherPropsMarkup.map((prop: any) => `${prop}`).join(',')})`;
 
   return markup;
 }
