@@ -2,9 +2,9 @@
   "name": "st.command_generator",
   "id": "1143622264502622674",
   "api": "1.0.0",
-  "main": "code.js",
+  "main": "dist/code.js",
   "editorType": [
     "figma"
   ],
-  "ui": "ui.html"
+  "ui": "dist/index.html"
 }

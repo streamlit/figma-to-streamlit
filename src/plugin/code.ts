@@ -1,7 +1,7 @@
-// This plugin lets you generate the proper st. commands with their corresponding
-// properties, from our existing component library
+// A plugin to generate st. commands with their corresponding parameters,
+// based on the components from our existing Figma library
 
-// This shows the HTML page in "ui.html".
+// This shows the HTML page in "ui.html", and adds a small height to it
 figma.showUI(__html__, { height: 140 });
 
 // Function to generate the markup for the selected item
@@ -249,6 +249,5 @@ figma.ui.onmessage = msg => {
 
   // Make sure to close the plugin when you're done. Otherwise the plugin will
   // keep running, which shows the cancel button at the bottom of the screen.
-  // Commented out for now for easier development flow
-  // figma.closePlugin();
+  figma.closePlugin();
 };
