@@ -1,6 +1,16 @@
 // A plugin to generate st. commands with their corresponding parameters,
 // based on the components from our existing Figma library
 
+// Figma-specific imports
+import { dispatchUIMessage } from './lib/figma/dispatchUIMessage';
+import { resizeUI } from './lib/figma/resizeUI';
+
+// Plugin-specific imports
+import { checkSelection } from './lib/checkSelection';
+import { identifyWidget } from './lib/identifyWidget';
+import { getWidgetVariants } from './lib/getWidgetVariants';
+import { checkChildrenVisibility } from './lib/checkChildrenVisibility';
+
 // This shows the HTML page in "ui.html", and adds a small height to it
 figma.showUI(__html__, { height: 140 });
 
@@ -77,177 +87,58 @@ const getNodeContent = (item: any, component: any) => {
   }
 }
 
-// Function to check the node visibility
-const checkVisibility = (node: any) => {
-  
-  // First, we check if the current node we are traversing is visible
-  const isParentVisible = node.visible;
-
-  // If it is, then check its descendants, and return their name and visibility
-  if(isParentVisible) {
-    let nodeList: object[] = [];
-    
-    // If the node has no children, such as `st.title`, `st.text`, `st.subheader`, etc
-    if(!node.children) {
-      nodeList.push({
-        name: node.name.toLowerCase(),
-        visible: node.visible,
-        type: node.type,
-        content: node,
-      })
-    } else {
-      // TBD: More thorough check for label_visibility
-      node.children.map((children: any) => nodeList.push({
-        name: children.name.toLowerCase(),
-        visible: children.visible,
-        type: children.type,
-        content: children
-      }));
-    }
-
-    return nodeList;
-  } else {
-    return;
-  }
-}
-
-// Function to gather the values for the common props all our components have
-const getGlobalProps = (node: any, component: any) => {
-
-  // Get the component variants, since some of the arguments
-  // are added there, such as "Disabled=True"
-  for (const property in node.componentProperties) {
-    
-    // Get all the possible variations and add them to the props object
-    switch(property.toLowerCase()) {
-      case 'disabled':
-        const isDisabled = node.componentProperties[property].value.toLowerCase() === 'true';
-        component.properties.push({ disabled: isDisabled });
-        break;
-    }
-  }
-
-  // After the variants, get the component children, and update values depending on its state and values
-  for (const index in node.children) {
-
-    // Check the visible attribute in Figma. If the group (or any of its children)
-    // is not visible, that means the user don't want those properties
-    // on their code, so we can exit the function and set them to false.
-    const nodeList = checkVisibility(node.children[index]);
-
-    nodeList?.map((item: any) => {
-      
-      // If the item is visible, let's get the content for it
-      if(item.visible === true) {
-        getNodeContent(item, component);
-      }
-
-      // If the label is invisible, set the override to an empty string
-      // TBD handle this with label_visibility once it ships
-      else if(item.visible === false && item.name === 'label') {
-        component.properties.push({
-          label: ''
-        });
-      }
-      else {
-        return;
-      }
-    });
-  }
-};
-
-// Function to traverse the selected nodes and identify the widgets
-const traverse = (node: any) => {
-
-  // If there are no childrens, that means we selected an empty element.
-  // If the node is not an instance, throw an error to avoid funky behavior and edge cases.
-  if ("children" in node && node.type === "INSTANCE") {
-    
-    // Selection is valid, let's id the component!
-    identifyComponent(node);
-  } else {
-
-    // Make the ui taller
-    figma.ui.resize(300, 200);
-
-    // Throw an error if invalid selection
-    figma.ui.postMessage({
-      type: 'error',
-      message: '😬 Invalid selection. Please select an instance from the library to generate the code.'
-    })
-    return;
-  };
-};
-
-// Function to identify the component and get its data
-const identifyComponent = (node: any) => {
-
-  // Get the parent's information
-  const parent = node.masterComponent;
-  const component = {
-    name: node.name,
-    description: parent.description,
-    link: parent.documentationLinks[0].uri,
-    properties: [],
-    markup: '',
-  };
-
-  // Go through the selected component and get its global properties
-  getGlobalProps(node, component);
-
-  // TBD: Get component-specific props
-
-  // Generate the markup for the component
-  const componentWithMarkup = generateMarkup(component);
-
-  // Make the ui taller
-  figma.ui.resize(300, 500);
-
-  // Send a success message to the plugin with the data
-  figma.ui.postMessage({
-    type: 'success',
-    message: 'Nice one! Find the code snippet below 👇🏻',
-    component: componentWithMarkup,
-  });
-};
-
 // Calls to "parent.postMessage" from within the HTML page will trigger this
 // callback. The callback will be passed the "pluginMessage" property of the
 // posted message.
 figma.ui.onmessage = msg => {
+  const selectionExists = figma.currentPage.selection.length;
 
-  // One way of distinguishing between different types of messages sent from
-  // your HTML page is to use an object with a "type" property like this.
+  switch(msg.type) {
+    // Try to id the selection the user made in Figma
+    case 'id-selection':
+      // If there's nothing selected, throw an error
+      if(!selectionExists) {
+        resizeUI(300, 200);
+        dispatchUIMessage('error', 'Nothing selected. Pick a component instance to get its code.');
+      } else {
+        // If there's a selection, check to see if it's valid selection
+        for (const node of figma.currentPage.selection) {
+          checkSelection(node);
 
-  // If the type is 'identify-widget', then that's what we do!
-  if (msg.type === 'identify-widget') {
-    
-    // If there's nothing selected, throw an error
-    if(!figma.currentPage.selection.length) {
-      
-      // Make the ui taller
-      figma.ui.resize(300, 200);
+          // After we've checked the selection, we know the node is an instance,
+          // so let's make an assertion to prevent TypeScript warnings.
+          let nodeInstance = node as InstanceNode;
 
-      figma.ui.postMessage({
-        type: 'error',
-        message: 'Nothing selected. Pick a component to get its code.'
-      });
-      return;
-    } else {
-      // Traverse the selected nodes and get their information
-      for (const node of figma.currentPage.selection) {
-        traverse(node);
-      };
-    };
+          // If selection is valid, then let's identify the widget...
+          const widget = identifyWidget(node);
+
+          // If the widget uses variants, for example if it
+          // can be disabled, can have help tooltips, can have an active value,
+          // Then let's check them
+          if(nodeInstance.componentProperties) {
+            getWidgetVariants(widget, nodeInstance);
+          };
+
+          // TBD: Use findAll for better performance and easier parsing
+
+          // After the variants, it's time to check the component's children
+          // if(nodeInstance.children) {
+          //   // First, let's check the visible/invisible layers,
+          //   // and update values depending on its state
+          // }
+          // getWidgetProps(widget, node);
+
+          // TBD: Get component-specific props
+
+          // ...and generate the markup for the widget
+          // const componentWithMarkup = generateMarkup(component);
+
+          // After we got the data, update the plugin UI
+          resizeUI(300, 500);
+          // TBD: Send the data here as well
+          dispatchUIMessage('success', 'Nice one! Find the code snippet below 👇🏻');
+        };
+      }
+      break;
   }
-  // If the type is clean-old-data, then let's wipe the old overrides
-  else if(msg.type === 'clean-old-data') {
-    figma.ui.postMessage({
-      type: 'cleanup',
-    });
-  }
-
-  // Make sure to close the plugin when you're done. Otherwise the plugin will
-  // keep running, which shows the cancel button at the bottom of the screen.
-  figma.closePlugin();
 };

@@ -15,9 +15,6 @@ export default defineConfig({
     outDir: "../../dist",
     rollupOptions: {
       inlineDynamicImports: true,
-      output: {
-        manualChunks: () => "everything.js",
-      },
     },
   },
 });
