@@ -9,12 +9,12 @@ import { resizeUI } from './lib/figma/resizeUI';
 import { checkSelection } from './lib/checkSelection';
 import { identifyWidget } from './lib/identifyWidget';
 import { getWidgetVariants } from './lib/getWidgetVariants';
-import { checkChildrenVisibility } from './lib/checkChildrenVisibility';
+import { getChildrenProps } from './lib/getChildrenProps';
 
 // This shows the HTML page in "ui.html", and adds a small height to it
 figma.showUI(__html__, { height: 140 });
 
-// Function to generate the markup for the selected item
+// WIP: Function to generate the markup for the selected item
 const generateMarkup = (component: any) => {
   // Normalize the props into an object
   const obj = Object.assign({}, ...component.properties);
@@ -56,37 +56,6 @@ const generateMarkup = (component: any) => {
   return component;
 }
 
-// Function to get the content for the visible node
-const getNodeContent = (item: any, component: any) => {
-  
-  // Do different stuff based on the type of node
-  switch(item.type) {
-
-    // If text, easy peasy
-    case 'TEXT':
-      const name = item.name;
-      const content = item.content.characters;
-
-      component.properties.push({
-        [name]: content,
-      });
-      break;
-
-    // If a frame, auto layout, etc, get the text nodes inside of them
-    case 'FRAME':
-      const textNodes = item.content.findAllWithCriteria({ types: ['TEXT']})
-      textNodes.map((node: any) => {
-        const name = node.name.toLowerCase();
-        const content = node.characters;
-
-        component.properties.push({
-          [name]: content
-        });
-      })
-      break;
-  }
-}
-
 // Calls to "parent.postMessage" from within the HTML page will trigger this
 // callback. The callback will be passed the "pluginMessage" property of the
 // posted message.
@@ -119,16 +88,15 @@ figma.ui.onmessage = msg => {
             getWidgetVariants(widget, nodeInstance);
           };
 
-          // TBD: Use findAll for better performance and easier parsing
-
           // After the variants, it's time to check the component's children
-          // if(nodeInstance.children) {
-          //   // First, let's check the visible/invisible layers,
-          //   // and update values depending on its state
-          // }
-          // getWidgetProps(widget, node);
+          if(nodeInstance.children) {
+            // Here, we check the layers,
+            // and update the widget object based on the
+            // layer's content and visibility
+            getChildrenProps(widget, nodeInstance)
+          }
 
-          // TBD: Get component-specific props
+          // TBD: Get component-specific props?
 
           // ...and generate the markup for the widget
           // const componentWithMarkup = generateMarkup(component);
