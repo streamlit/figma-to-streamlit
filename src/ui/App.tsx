@@ -12,10 +12,12 @@ const App = () => {
   // Function to get the data from the plugin and store it in state
   useEffect(() => {
     onmessage = (event) => {
-      const {type, message} = event.data.pluginMessage;
+      console.log(event.data.pluginMessage)
+      const {type, message, data} = event.data.pluginMessage;
       setMessage({
         type,
         message,
+        data
       })
     }
   }, []);

@@ -5,13 +5,17 @@ export const data = [
     "parameters": [
       {
         "name": "body",
+        "type": "str",
         "defaultValue": "",
-        "required": true
+        "required": true,
+        "keyValue": false
       },
       {
         "name": "anchor",
+        "type": "str",
         "defaultValue": "",
-        "required": false
+        "required": false,
+        "keyValue": true
       },
     ]
   },
@@ -21,63 +25,87 @@ export const data = [
     "parameters": [
       {
         "name": "label",
+        "type": "str",
         "defaultValue": "",
-        "required": true
+        "required": true,
+        "keyValue": false
       },
       {
         "name": "value",
+        "type": "str",
         "defaultValue": "",
-        "required": false
+        "required": false,
+        "keyValue": true
       },
       {
         "name": "placeholder",
+        "type": "str",
         "defaultValue": "",
-        "required": false
+        "required": false,
+        "keyValue": true
       },
       {
         "name": "help",
+        "type": "str",
         "defaultValue": "",
-        "required": false
+        "required": false,
+        "keyValue": true
       },
       {
         "name": "disabled",
+        "type": "bool",
         "defaultValue": false,
-        "required": false
+        "required": false,
+        "keyValue": true
       },
       {
         "name": "max_chars",
+        "type": "int",
         "defaultValue": 0,
-        "required": false
+        "required": false,
+        "keyValue": true
       },
       {
         "name": "key",
+        "type": "str",
         "defaultValue": "",
-        "required": false
+        "required": false,
+        "keyValue": true
       },
       {
         "name": "type",
+        "type": "str",
         "defaultValue": "",
-        "required": false
+        "required": false,
+        "keyValue": true
       },
       {
         "name": "autocomplete",
+        "type": "str",
         "defaultValue": "",
-        "required": false
+        "required": false,
+        "keyValue": true
       },
       {
         "name": "on_change",
+        "type": "callable",
         "defaultValue": "",
-        "required": false
+        "required": false,
+        "keyValue": true
       },
       {
         "name": "args",
+        "type": "tuple",
         "defaultValue": "",
-        "required": false
+        "required": false,
+        "keyValue": true
       },
       {
         "name": "kwargs",
+        "type": "dict",
         "defaultValue": "",
-        "required": false
+        "required": false,
+        "keyValue": true
       },
     ]
   },

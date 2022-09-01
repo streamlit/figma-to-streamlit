@@ -10,51 +10,10 @@ import { checkSelection } from './lib/checkSelection';
 import { identifyWidget } from './lib/identifyWidget';
 import { getWidgetVariants } from './lib/getWidgetVariants';
 import { getChildrenProps } from './lib/getChildrenProps';
+import { generateMarkup } from './lib/generateMarkup';
 
 // This shows the HTML page in "ui.html", and adds a small height to it
 figma.showUI(__html__, { height: 140 });
-
-// WIP: Function to generate the markup for the selected item
-const generateMarkup = (component: any) => {
-  // Normalize the props into an object
-  const obj = Object.assign({}, ...component.properties);
-  
-  // Destructure properties that go without keyword
-  const {label, value, disabled, body, ...rest} = obj;
-  let labelAndValue;
-  const otherPropsMarkup = [];
-  
-  // TBD: Better logic for this
-  // If there's a value, concat it with the label
-  if(value) {
-    labelAndValue = `'${label}','${value}',`;
-  }
-  // If there's just a label, show that
-  else if(label) {
-    labelAndValue = `'${label}',`;
-  }
-
-  if(disabled && disabled === true) {
-    otherPropsMarkup.push('disabled=True');
-  }
-
-  // For the rest of the props (help, placeholder, etc),
-  // concat them using the keyword approach: key='value'
-  for (const [key, value] of Object.entries(rest)) {
-    otherPropsMarkup.push(`${key}='${value}'`);
-  }
-
-  // The order for the parameters is important:
-  // For inputs, label goes first, value goes after (if it exists),
-  // Then all the other keyword arguments
-  const rawMarkup = `${component.name}(${labelAndValue ? labelAndValue : `'${body}'`}${otherPropsMarkup.map((prop: any) => ` ${prop}`).join(', ')})`;
-  const styledMarkup = `<code>${component.name}(</code><code><span style="padding-left: 1rem; color: #FFA421;">${labelAndValue ? labelAndValue : `'${body}'`}</span></code>${otherPropsMarkup.map((prop: any) => `<code><span style="padding-left: 1rem; color: #FFA421;">${prop}</span><span style="color: #FFA421;">,</span></code>`).join('')})`;
-
-  component.rawMarkup = rawMarkup;
-  component.styledMarkup = styledMarkup;
-
-  return component;
-}
 
 // Calls to "parent.postMessage" from within the HTML page will trigger this
 // callback. The callback will be passed the "pluginMessage" property of the
@@ -96,15 +55,12 @@ figma.ui.onmessage = msg => {
             getChildrenProps(widget, nodeInstance)
           }
 
-          // TBD: Get component-specific props?
-
           // ...and generate the markup for the widget
-          // const componentWithMarkup = generateMarkup(component);
+          const widgetWithMarkup = generateMarkup(widget);
 
           // After we got the data, update the plugin UI
           resizeUI(300, 500);
-          // TBD: Send the data here as well
-          dispatchUIMessage('success', 'Nice one! Find the code snippet below 👇🏻');
+          dispatchUIMessage('success', 'Nice one! Find the code snippet below 👇🏻', widgetWithMarkup);
         };
       }
       break;
