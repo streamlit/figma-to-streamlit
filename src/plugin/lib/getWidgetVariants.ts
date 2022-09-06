@@ -7,8 +7,17 @@ export const getWidgetVariants = (widget: any, node: InstanceNode) => {
     switch(property.toLowerCase()) {
       case 'disabled':
         const isDisabled = node.componentProperties[property].value === 'True';
-        const matchingProp = findMatchingProp(widget, property);
-        matchingProp.value = isDisabled;
+        const disabledProp = findMatchingProp(widget, property);
+        disabledProp.value = isDisabled;
+        break;
+      // Some widgets, such as st.checkbox, have the value set as a variant,
+      // so we can enable/disable different layers based on the selected option.
+      // For those use cases, we need to pipe the value this way, and not by looking
+      // at the text characters
+      case 'value':
+        const widgetValue = node.componentProperties[property].value === 'True';
+        const valueProp = findMatchingProp(widget, property);
+        valueProp.value = widgetValue;
         break;
       default:
         // Many of our variants are heavily used in the Figma library,
