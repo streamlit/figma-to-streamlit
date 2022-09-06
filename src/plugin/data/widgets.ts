@@ -20,6 +20,132 @@ export const data = [
     ]
   },
   {
+    "category": "text",
+    "name": "st.header",
+    "parameters": [
+      {
+        "name": "body",
+        "type": "str",
+        "defaultValue": "",
+        "required": true,
+        "keyValue": false
+      },
+      {
+        "name": "anchor",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+    ]
+  },
+  {
+    "category": "text",
+    "name": "st.subheader",
+    "parameters": [
+      {
+        "name": "body",
+        "type": "str",
+        "defaultValue": "",
+        "required": true,
+        "keyValue": false
+      },
+      {
+        "name": "anchor",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+    ]
+  },
+  {
+    "category": "text",
+    "name": "st.caption",
+    "parameters": [
+      {
+        "name": "body",
+        "type": "str",
+        "defaultValue": "",
+        "required": true,
+        "keyValue": false
+      },
+      {
+        "name": "unsafe_allow_html",
+        "type": "bool",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+    ]
+  },
+  {
+    "category": "text",
+    "name": "st.markdown",
+    "parameters": [
+      {
+        "name": "body",
+        "type": "str",
+        "defaultValue": "",
+        "required": true,
+        "keyValue": false
+      },
+      {
+        "name": "unsafe_allow_html",
+        "type": "bool",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+    ]
+  },
+  {
+    "category": "text",
+    "name": "st.text",
+    "parameters": [
+      {
+        "name": "body",
+        "type": "str",
+        "defaultValue": "",
+        "required": true,
+        "keyValue": false
+      },
+    ]
+  },
+  {
+    "category": "text",
+    "name": "st.latex",
+    "parameters": [
+      {
+        "name": "body",
+        "type": "str",
+        "defaultValue": "",
+        "required": true,
+        "keyValue": false
+      },
+    ]
+  },
+  {
+    "category": "text",
+    "name": "st.code",
+    "parameters": [
+      {
+        "name": "body",
+        "type": "str",
+        "defaultValue": "",
+        "required": true,
+        "keyValue": false
+      },
+      {
+        "name": "language",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": false
+      },
+    ]
+  },
+  {
     "category": "widgets",
     "name": "st.text_input",
     "parameters": [
