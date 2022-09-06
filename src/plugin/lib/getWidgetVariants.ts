@@ -1,4 +1,5 @@
 import { findMatchingProp } from "./findMatchingProp";
+import { getOptionValues } from "./getOptionValues";
 
 // Function to gather the values for the different variants our widget has
 export const getWidgetVariants = (widget: any, node: InstanceNode) => {
@@ -19,6 +20,27 @@ export const getWidgetVariants = (widget: any, node: InstanceNode) => {
         const valueProp = findMatchingProp(widget, property);
         valueProp.value = widgetValue;
         break;
+      // Other widgets, such as st.selectbox, st.multiselect, st.radio, have "Options",
+      // which translate into an array of values. For those, we should loop through all
+      // and get the values, even if the layer is invisible, as they are required props
+      case 'options':
+        const optionsParent = node.children[node.children.length - 1] as any;
+        const optionsFrame = optionsParent.children[optionsParent.children.length - 1];
+        const options = getOptionValues(optionsFrame);
+
+        // Options are required for selectboxes to work, so we need to have
+        // at least one visible option. If not, we throw an error.
+        const visibleOptions = options.filter((option: any) => option.visible === true);
+        const isAtLeastOneVisible = visibleOptions.length > 0;
+
+        if(!isAtLeastOneVisible) {
+          throw new Error('You need to have at least one visible option for st.selectbox\'s code to work as expected');
+        } else {
+          const optionsProp = findMatchingProp(widget, property);
+          optionsProp.value = `${visibleOptions?.map((option : any) => `'${option.value}',`).join('')}`;
+        }
+
+        break;
       default:
         // Many of our variants are heavily used in the Figma library,
         // but not all of them are translated into code,
@@ -28,32 +50,4 @@ export const getWidgetVariants = (widget: any, node: InstanceNode) => {
   }
 
   return widget;
-
-  // After the variants, get the component children, and update values depending on its state and values
-  // for (const index in node.children) {
-
-  //   // Check the visible attribute in Figma. If the group (or any of its children)
-  //   // is not visible, that means the user don't want those properties
-  //   // on their code, so we can exit the function and set them to false.
-  //   const nodeList = checkVisibility(node.children[index]);
-
-  //   nodeList?.map((item: any) => {
-      
-  //     // If the item is visible, let's get the content for it
-  //     if(item.visible === true) {
-  //       getNodeContent(item, component);
-  //     }
-
-  //     // If the label is invisible, set the override to an empty string
-  //     // TBD handle this with label_visibility once it ships
-  //     else if(item.visible === false && item.name === 'label') {
-  //       component.properties.push({
-  //         label: ''
-  //       });
-  //     }
-  //     else {
-  //       return;
-  //     }
-  //   });
-  // }
 };

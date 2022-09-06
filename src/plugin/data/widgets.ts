@@ -377,7 +377,7 @@ export const data = [
         "type": "sequence",
         "defaultValue": "[]",
         "required": true,
-        "keyValue": true
+        "keyValue": false
       },
       {
         "name": "index",
@@ -460,7 +460,7 @@ export const data = [
         "type": "sequence",
         "defaultValue": "[]",
         "required": true,
-        "keyValue": true
+        "keyValue": false
       },
       {
         "name": "index",
