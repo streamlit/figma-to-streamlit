@@ -55,6 +55,8 @@ figma.ui.onmessage = msg => {
             getChildrenProps(widget, nodeInstance)
           }
 
+          console.log(widget)
+
           // ...and generate the markup for the widget
           const widgetWithMarkup = generateMarkup(widget);
 

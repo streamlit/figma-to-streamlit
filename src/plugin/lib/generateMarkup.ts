@@ -31,7 +31,7 @@ export const generateMarkup = (widget: any) => {
 
   // Create the markup for the code snippet.
   // TBD: Make code nicer looking, but ensure the indentation doesn't get messed up
-  const markup = `${widget.name}(${valueOnlyParams.map((param : any) => param.name === 'options' ? `(${param.value})` : `'${param.value}'`).join(',')}${formattedBooleans !== undefined ? `,${formattedBooleans}` : ''}${formattedIntegers !== undefined ? `,${formattedIntegers}` : ''}${keywordValueParams.map((param : any) => `,${param.name}='${param.value}'`).join('')})`;
+  const markup = `${widget.name}(${valueOnlyParams.map((param : any) => param.name === 'options' || param.name === 'default' ? `${param.value}` : `'${param.value}'`).join(',')}${formattedBooleans !== undefined ? `,${formattedBooleans}` : ''}${formattedIntegers !== undefined ? `,${formattedIntegers}` : ''}${keywordValueParams.map((param : any) => `,${param.name}='${param.value}'`).join('')})`;
 
   return markup;
 }

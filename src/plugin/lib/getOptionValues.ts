@@ -1,3 +1,4 @@
+// Function to identify the values and visibility for the options parameter
 export const getOptionValues = (children: any) => {
   // Get all text nodes within the component structure...
   const textChildren = children.findAllWithCriteria({

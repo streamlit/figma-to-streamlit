@@ -522,6 +522,82 @@ export const data = [
   },
   {
     "category": "widgets",
+    "name": "st.multiselect",
+    "parameters": [
+      {
+        "name": "label",
+        "type": "str",
+        "defaultValue": "",
+        "required": true,
+        "keyValue": false
+      },
+      {
+        "name": "options",
+        "type": "sequence",
+        "defaultValue": "[]",
+        "required": true,
+        "keyValue": false
+      },
+      {
+        "name": "default",
+        "type": "list",
+        "defaultValue": "[]",
+        "required": false,
+        "keyValue": false
+      },
+      {
+        "name": "help",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "disabled",
+        "type": "bool",
+        "defaultValue": false,
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "format_func",
+        "type": "function",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "on_change",
+        "type": "callable",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "key",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "args",
+        "type": "tuple",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "kwargs",
+        "type": "dict",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+    ]
+  },
+  {
+    "category": "widgets",
     "name": "st.text_input",
     "parameters": [
       {
