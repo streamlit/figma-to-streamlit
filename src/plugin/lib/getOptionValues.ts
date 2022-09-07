@@ -13,5 +13,14 @@ export const getOptionValues = (children: any) => {
     })
   });
 
-  return options;
+  // Options are required for selectboxes and radios to work, so we need to have
+  // at least one visible option. If not, we throw an error.
+  const visibleOptions = options.filter((option: any) => option.visible === true);
+  const isAtLeastOneVisible = visibleOptions.length > 0;
+
+  if(!isAtLeastOneVisible) {
+    throw new Error('You need to have at least one visible option for this widget\'s code to work as expected');
+  } else {
+    return visibleOptions;
+  }
 }

@@ -13,6 +13,13 @@ export const generateMarkup = (widget: any) => {
     formattedBooleans = booleanParams.map((param: any) => `${param.name}=${param.value.toString()[0].toUpperCase() + param.value.toString().substring(1)}`).join(',');
   }
 
+  // Let's also grab the booleans, and format them accordingly
+  const integerParams = widget.parameters.filter((param: any) => param.keyValue === true && param.type === 'int' && param.value !== undefined);
+  let formattedIntegers;
+  if(integerParams.length) {
+    formattedIntegers = integerParams.map((param: any) => `${param.name}=${param.value}`).join(',');
+  }
+
   // Separate the keyword-value and value-only params,
   // as the ordering is importan, and keyword-only go first in the code.
   // For example, on the inputs:
@@ -20,11 +27,11 @@ export const generateMarkup = (widget: any) => {
   // 2. value goes after (if it exists);
   // 3. then all the other keyword arguments
   const valueOnlyParams = params.filter((param: any) => param.keyValue === false);
-  const keywordValueParams = params.filter((param: any) => param.keyValue === true && param.type !== 'bool');
+  const keywordValueParams = params.filter((param: any) => param.keyValue === true && param.type !== 'bool' && param.keyValue === true && param.type !== 'int');
 
   // Create the markup for the code snippet.
   // TBD: Make code nicer looking, but ensure the indentation doesn't get messed up
-  const markup = `${widget.name}(${valueOnlyParams.map((param : any) => param.name === 'options' ? `(${param.value})` : `'${param.value}'`).join(',')}${formattedBooleans !== undefined ? `,${formattedBooleans}` : ''}${keywordValueParams.map((param : any) => `,${param.name}='${param.value}'`).join('')})`;
+  const markup = `${widget.name}(${valueOnlyParams.map((param : any) => param.name === 'options' ? `(${param.value})` : `'${param.value}'`).join(',')}${formattedBooleans !== undefined ? `,${formattedBooleans}` : ''}${formattedIntegers !== undefined ? `,${formattedIntegers}` : ''}${keywordValueParams.map((param : any) => `,${param.name}='${param.value}'`).join('')})`;
 
   return markup;
 }

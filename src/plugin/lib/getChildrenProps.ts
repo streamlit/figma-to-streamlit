@@ -10,7 +10,16 @@ export const getChildrenProps = (widget: any, children: any) => {
   textChildren.map((child: TextNode) => {
     const matchingProp = findMatchingProp(widget, child.name);
     if(matchingProp) {
-      matchingProp.visible = child.visible;
+
+      // If we don't have a visible attribute coming from getWidgetVariants,
+      // we pipe it here, based on the child's visibility.
+      // This can be faulty though, since child can be visible but the parent isn't,
+      // so it's best to check in the previous getWidgetVariants step.
+      if(matchingProp.visible === undefined) {
+        matchingProp.visible = child.visible;
+      }
+
+      // Add its value
       matchingProp.value = child.characters;
     }
   });
