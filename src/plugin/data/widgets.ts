@@ -1156,4 +1156,190 @@ export const data = [
       },
     ]
   },
+  {
+    "category": "widgets",
+    "name": "st.file_uploader",
+    "parameters": [
+      {
+        "name": "label",
+        "type": "str",
+        "defaultValue": "",
+        "required": true,
+        "keyValue": false
+      },
+      {
+        "name": "type",
+        "type": "str",
+        "defaultValue": "[]",
+        "required": false,
+        "keyValue": false
+      },
+      {
+        "name": "accept_multiple_files",
+        "type": "bool",
+        "defaultValue": false,
+        "required": false,
+        "keyValue": false
+      },
+      {
+        "name": "help",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "disabled",
+        "type": "bool",
+        "defaultValue": false,
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "key",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "on_change",
+        "type": "callable",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "args",
+        "type": "tuple",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "kwargs",
+        "type": "dict",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+    ]
+  },
+  {
+    "category": "widgets",
+    "name": "st.camera_input",
+    "parameters": [
+      {
+        "name": "label",
+        "type": "str",
+        "defaultValue": "",
+        "required": true,
+        "keyValue": false
+      },
+      {
+        "name": "help",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "disabled",
+        "type": "bool",
+        "defaultValue": false,
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "key",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "on_change",
+        "type": "callable",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "args",
+        "type": "tuple",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "kwargs",
+        "type": "dict",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+    ]
+  },
+  {
+    "category": "widgets",
+    "name": "st.color_picker",
+    "parameters": [
+      {
+        "name": "label",
+        "type": "str",
+        "defaultValue": "",
+        "required": true,
+        "keyValue": false
+      },
+      {
+        "name": "value",
+        "type": "str",
+        "defaultValue": "000000",
+        "required": false,
+        "keyValue": false
+      },
+      {
+        "name": "help",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "disabled",
+        "type": "bool",
+        "defaultValue": false,
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "key",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "on_change",
+        "type": "callable",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "args",
+        "type": "tuple",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "kwargs",
+        "type": "dict",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+    ]
+  },
 ]
