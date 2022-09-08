@@ -10,6 +10,18 @@ export const calculateSpecialProps = (widget: any, node: InstanceNode) => {
       const heightProp = findMatchingProp(widget, 'height');
       heightProp.value = height;
       break;
+    // For time input, the value needs to be turned into a datetime object
+    case 'st.time_input':
+      // Grab the value we have, and check if it's a valid format
+      const valueProp = findMatchingProp(widget, 'value');
+      const isValidDateTime = valueProp.value.match(/\d+/g);
+      
+      if(isValidDateTime !== null && isValidDateTime.length === 2) {
+        valueProp.value = `datetime.time(${isValidDateTime[0]}, ${isValidDateTime[1]})`
+      } else {
+        throw new Error('Value provided is not valid. Make sure it\'s hh:mm');
+      }
+      break;
     default:
       break;
   }

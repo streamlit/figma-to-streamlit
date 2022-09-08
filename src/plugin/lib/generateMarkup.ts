@@ -1,4 +1,5 @@
 // Function to generate the markup for the selected item
+// TBD: Clean this up a bit!
 export const generateMarkup = (widget: any) => {
   
   // From all the widget's params, let's grab those that:
@@ -26,12 +27,12 @@ export const generateMarkup = (widget: any) => {
   // 1. label goes first;
   // 2. value goes after (if it exists);
   // 3. then all the other keyword arguments
-  const valueOnlyParams = params.filter((param: any) => param.keyValue === false && param.type !== 'int');
-  const keywordValueParams = params.filter((param: any) => param.keyValue === true && param.type !== 'bool' && param.keyValue === true && param.type !== 'int');
+  const valueOnlyParams = params.filter((param: any) => param.keyValue === false && param.type !== 'int' || param.keyValue === false && param.type !== 'datetime');
+  const keywordValueParams = params.filter((param: any) => param.keyValue === true && param.type !== 'bool' && param.keyValue === true && param.type !== 'int' && param.keyValue === true && param.type !== 'datetime');
 
   // Create the markup for the code snippet.
   // TBD: Make code nicer looking, but ensure the indentation doesn't get messed up
-  const markup = `${widget.name}(${valueOnlyParams.map((param : any) => param.name === 'options' || param.name === 'default' ? `${param.value}` : `'${param.value}'`).join(',')}${formattedBooleans !== undefined ? `,${formattedBooleans}` : ''}${formattedIntegers !== undefined ? `,${formattedIntegers}` : ''}${keywordValueParams.map((param : any) => `,${param.name}='${param.value}'`).join('')})`;
+  const markup = `${widget.name}(${valueOnlyParams.map((param : any) => param.name === 'options' || param.name === 'default' || param.type === 'datetime' ? `${param.value}` : `'${param.value}'`).join(',')}${formattedBooleans !== undefined ? `,${formattedBooleans}` : ''}${formattedIntegers !== undefined ? `,${formattedIntegers}` : ''}${keywordValueParams.map((param : any) => `,${param.name}='${param.value}'`).join('')})`;
 
   return markup;
 }

@@ -1018,4 +1018,142 @@ export const data = [
       },
     ]
   },
+  {
+    "category": "widgets",
+    "name": "st.date_input",
+    "parameters": [
+      {
+        "name": "label",
+        "type": "str",
+        "defaultValue": "",
+        "required": true,
+        "keyValue": false
+      },
+      {
+        "name": "value",
+        "type": "datetime",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "min_value",
+        "type": "datetime",
+        "defaultValue": "-10",
+        "required": false,
+        "keyValue": false
+      },
+      {
+        "name": "max_value",
+        "type": "datetime",
+        "defaultValue": "+10",
+        "required": false,
+        "keyValue": false
+      },
+      {
+        "name": "help",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "disabled",
+        "type": "bool",
+        "defaultValue": false,
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "key",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "on_change",
+        "type": "callable",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "args",
+        "type": "tuple",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "kwargs",
+        "type": "dict",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+    ]
+  },
+  {
+    "category": "widgets",
+    "name": "st.time_input",
+    "parameters": [
+      {
+        "name": "label",
+        "type": "str",
+        "defaultValue": "",
+        "required": true,
+        "keyValue": false
+      },
+      {
+        "name": "value",
+        "type": "datetime",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": false
+      },
+      {
+        "name": "help",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "disabled",
+        "type": "bool",
+        "defaultValue": false,
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "key",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "on_change",
+        "type": "callable",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "args",
+        "type": "tuple",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "kwargs",
+        "type": "dict",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+    ]
+  },
 ]

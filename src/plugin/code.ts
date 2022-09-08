@@ -48,11 +48,6 @@ figma.ui.onmessage = msg => {
             getWidgetVariants(widget, nodeInstance);
           };
 
-          // Some of the widgets' props can be calculated by looking at Figma's properties.
-          // For example: We can pipe the "height" value for st.text_area by looking at the component height,
-          // or we can pipe the hex value in st.color_picker, so this function does that!
-          calculateSpecialProps(widget, nodeInstance);
-
           // After the variants, it's time to check the component's children
           if(nodeInstance.children) {
             // Here, we check the layers,
@@ -60,6 +55,11 @@ figma.ui.onmessage = msg => {
             // layer's content and visibility
             getChildrenProps(widget, nodeInstance)
           }
+
+          // Some of the widgets' props can be calculated by looking at Figma's properties.
+          // For example: We can pipe the "height" value for st.text_area by looking at the component height,
+          // or we can pipe the hex value in st.color_picker, so this function does that!
+          calculateSpecialProps(widget, nodeInstance);
 
           // ...and generate the markup for the widget
           const widgetWithMarkup = generateMarkup(widget);
