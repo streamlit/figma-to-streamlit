@@ -13,11 +13,11 @@ export const generateMarkup = (widget: any) => {
     formattedBooleans = booleanParams.map((param: any) => `${param.name}=${param.value.toString()[0].toUpperCase() + param.value.toString().substring(1)}`).join(',');
   }
 
-  // Let's also grab the booleans, and format them accordingly
-  const integerParams = widget.parameters.filter((param: any) => param.keyValue === true && param.type === 'int' && param.value !== undefined);
+  // Let's format integers while we're at it
+  const integerParams = widget.parameters.filter((param: any) => param.type === 'int' && param.value !== undefined);
   let formattedIntegers;
   if(integerParams.length) {
-    formattedIntegers = integerParams.map((param: any) => `${param.name}=${param.value}`).join(',');
+    formattedIntegers = integerParams.map((param: any) => `${param.keyValue === true ? `${param.name}=` : ''}${param.value}`).join(',');
   }
 
   // Separate the keyword-value and value-only params,
@@ -26,7 +26,7 @@ export const generateMarkup = (widget: any) => {
   // 1. label goes first;
   // 2. value goes after (if it exists);
   // 3. then all the other keyword arguments
-  const valueOnlyParams = params.filter((param: any) => param.keyValue === false);
+  const valueOnlyParams = params.filter((param: any) => param.keyValue === false && param.type !== 'int');
   const keywordValueParams = params.filter((param: any) => param.keyValue === true && param.type !== 'bool' && param.keyValue === true && param.type !== 'int');
 
   // Create the markup for the code snippet.
