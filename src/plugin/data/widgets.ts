@@ -688,6 +688,75 @@ export const data = [
   },
   {
     "category": "widgets",
+    "name": "st.select_slider",
+    "parameters": [
+      {
+        "name": "label",
+        "type": "str",
+        "defaultValue": "",
+        "required": true,
+        "keyValue": false
+      },
+      {
+        "name": "options",
+        "type": "sequence",
+        "defaultValue": "[]",
+        "required": true,
+        "keyValue": false
+      },
+      {
+        "name": "format_func",
+        "type": "function",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "help",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "disabled",
+        "type": "bool",
+        "defaultValue": false,
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "on_change",
+        "type": "callable",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "key",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "args",
+        "type": "tuple",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "kwargs",
+        "type": "dict",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+    ]
+  },
+  {
+    "category": "widgets",
     "name": "st.text_input",
     "parameters": [
       {
@@ -749,6 +818,179 @@ export const data = [
       {
         "name": "autocomplete",
         "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "on_change",
+        "type": "callable",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "args",
+        "type": "tuple",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "kwargs",
+        "type": "dict",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+    ]
+  },
+  {
+    "category": "widgets",
+    "name": "st.number_input",
+    "parameters": [
+      {
+        "name": "label",
+        "type": "str",
+        "defaultValue": "",
+        "required": true,
+        "keyValue": false
+      },
+      {
+        "name": "min_value",
+        "type": "int",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": false
+      },
+      {
+        "name": "max_value",
+        "type": "int",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": false
+      },
+      {
+        "name": "value",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "step",
+        "type": "int",
+        "defaultValue": "0.0",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "help",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "disabled",
+        "type": "bool",
+        "defaultValue": false,
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "format",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "key",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "on_change",
+        "type": "callable",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "args",
+        "type": "tuple",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "kwargs",
+        "type": "dict",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+    ]
+  },
+  {
+    "category": "widgets",
+    "name": "st.text_area",
+    "parameters": [
+      {
+        "name": "label",
+        "type": "str",
+        "defaultValue": "",
+        "required": true,
+        "keyValue": false
+      },
+      {
+        "name": "value",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "placeholder",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "help",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "disabled",
+        "type": "bool",
+        "defaultValue": false,
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "max_chars",
+        "type": "int",
+        "defaultValue": 0,
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "key",
+        "type": "str",
+        "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "height",
+        "type": "int",
         "defaultValue": "",
         "required": false,
         "keyValue": true
