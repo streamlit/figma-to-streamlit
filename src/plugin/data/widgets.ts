@@ -872,7 +872,7 @@ export const data = [
       },
       {
         "name": "value",
-        "type": "str",
+        "type": "int",
         "defaultValue": "",
         "required": false,
         "keyValue": true
