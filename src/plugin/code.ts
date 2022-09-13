@@ -14,7 +14,7 @@ import { generateMarkup } from './lib/generateMarkup';
 import { calculateSpecialProps } from './lib/calculateSpecialProps';
 
 // This shows the HTML page in "ui.html", and adds a small height to it
-figma.showUI(__html__, { height: 140 });
+figma.showUI(__html__, { themeColors: true, height: 155 });
 
 // Calls to "parent.postMessage" from within the HTML page will trigger this
 // callback. The callback will be passed the "pluginMessage" property of the
@@ -27,8 +27,7 @@ figma.ui.onmessage = msg => {
     case 'id-selection':
       // If there's nothing selected, throw an error
       if(!selectionExists) {
-        resizeUI(300, 200);
-        dispatchUIMessage('error', 'Nothing selected. Pick a component instance to get its code.');
+        throw new Error('Nothing selected. Pick a component instance to get its code.');
       } else {
         // If there's a selection, check to see if it's valid selection
         for (const node of figma.currentPage.selection) {

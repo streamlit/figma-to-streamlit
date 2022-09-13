@@ -11,7 +11,8 @@ export const checkSelection = (node: any) => {
   } else {
 
     // Make the ui taller and throw an error
-    resizeUI(300, 200);
-    dispatchUIMessage('error', '😬 Invalid selection. Please select an instance from the library to generate the code.');
+    resizeUI(300, 255);
+    dispatchUIMessage('error', 'Invalid selection. Please select a valid instance from the library to generate the code.', { helpUrl: 'https://github.com/streamlit/figma-plugin#troubleshooting'});
+    throw new Error('Invalid selection');
   };
 };
