@@ -32,6 +32,9 @@ export const getWidgetVariants = (widget: any, node: InstanceNode) => {
       // which translate into an array of values. For those, we should loop through all
       // and get the values, even if the layer is invisible, as they are required props
       case 'options':
+        // We don't want to do this for st.time_input though
+        if(widget.name === 'st.time_input') break;
+        
         const optionsParent = node.children[node.children.length - 1] as any;
         const optionsFrame = optionsParent.children.find((child: any) => child.name === 'Options');
         const options = getOptionValues(optionsFrame);
