@@ -1,0 +1,24 @@
+.Container {
+  @apply p-4;
+}
+
+.Title {
+  @apply font-semibold text-sm;
+  color: var(--figma-color-text);
+}
+
+.Description {
+  @apply font-light py-4 text-xs;
+  color: var(--figma-color-text-secondary);
+}
+
+.Cta {
+  border: 1px solid var(--figma-color-border);
+  color: var(--figma-color-text);
+  @apply px-3 py-2 rounded-md text-xs transition ease-in-out duration-75;
+}
+
+.Cta:hover {
+  background-color: var(--figma-color-bg-brand);
+  border-color: var(--figma-color-bg-brand);
+}
