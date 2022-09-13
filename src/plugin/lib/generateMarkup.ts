@@ -1,39 +1,102 @@
+import {formatParams} from './formatParams';
+
 // Function to generate the markup for the selected item
-// TBD: Clean this up a bit!
 export const generateMarkup = (widget: any) => {
+
+  // We'll hold all the params we need to add to the snippet here.
+  // Strap it since there's a bunch of data-massaging that we need to do!
+  const markupParams: string[] = [];
   
   // From all the widget's params, let's grab those that:
   // 1. have a value on them and are visible;
   // 2. have a value on them and are required
-  const params = widget.parameters.filter((param: any) => param.value !== undefined && param.visible === true || param.value !== undefined && param.required === true);
+  const valueParams = widget.parameters.filter((param: any) =>
+    param.value !== undefined && param.visible === true ||
+    param.value !== undefined && param.required === true
+  );
 
-  // Let's also grab the booleans, and format them accordingly
-  const booleanParams = widget.parameters.filter((param: any) => param.keyValue === true && param.type === 'bool' && param.value === true);
-  let formattedBooleans;
+  // After we have the value params, let's separate keyword-value from value-only params,
+  // as the ordering is important, and keyword-only params go first in the code.
+  // For example, on inputs:
+  // 1. "label" goes first;
+  // 2. "value" goes after (if it exists);
+  // 3. then all the other keyword arguments.
+  const valueOnlyParams = valueParams.filter((param: any) => 
+    
+    // We also exclude here some specific types, since we handle those separately below
+    param.keyValue === false && param.type !== 'int' &&
+    param.keyValue === false && param.type !== 'datetime'
+  );
+
+  // Formatting function for value-only params
+  if(valueOnlyParams.length) {
+    markupParams.push(formatParams('value-only', valueOnlyParams));
+  }
+
+  // Let's now separate the booleans, since they behave differently
+  // than value params. We only grab those that:
+  // 1. Are key-value (like disabled=True);
+  // 2. Are booleans;
+  // 3. Have a "true" value (we don't do disabled=False since it's redundant).
+  const booleanParams = widget.parameters.filter((param: any) =>
+    param.keyValue === true && param.type === 'bool' && param.value === true
+  );
+
+  // After we got them, let's format'em here, so the code below doesn't get too messy
   if(booleanParams.length) {
-    formattedBooleans = booleanParams.map((param: any) => `${param.name}=${param.value.toString()[0].toUpperCase() + param.value.toString().substring(1)}`).join(',');
+    markupParams.push(formatParams('boolean', booleanParams));
   }
 
-  // Let's format integers while we're at it
-  const integerParams = widget.parameters.filter((param: any) => param.type === 'int' && param.value !== undefined);
-  let formattedIntegers;
+  // Now, let's get integers. These should:
+  // 1. be integers;
+  // 2. have a value set.
+  const integerParams = widget.parameters.filter((param: any) =>
+    param.type === 'int' && param.value !== undefined
+  );
+  
+  // Now, into formatting them
   if(integerParams.length) {
-    formattedIntegers = integerParams.map((param: any) => `${param.keyValue === true ? `${param.name}=` : ''}${param.value}`).join(',');
+    markupParams.push(formatParams('integer', integerParams));
   }
 
-  // Separate the keyword-value and value-only params,
-  // as the ordering is importan, and keyword-only go first in the code.
-  // For example, on the inputs:
-  // 1. label goes first;
-  // 2. value goes after (if it exists);
-  // 3. then all the other keyword arguments
-  const valueOnlyParams = params.filter((param: any) => param.keyValue === false && param.type !== 'int' || param.keyValue === false && param.type !== 'datetime');
-  const keywordValueParams = params.filter((param: any) => param.keyValue === true && param.type !== 'bool' && param.keyValue === true && param.type !== 'int' && param.keyValue === true && param.type !== 'datetime');
+  // Tired already? Now, let's grab the key-value pairs.
+  // We're also removing some specific values that are handled below
+  const keywordValueParams = valueParams.filter((param: any) => 
+    param.keyValue === true && param.type !== 'bool' &&
+    param.keyValue === true && param.type !== 'int' && 
+    param.keyValue === true && param.type !== 'datetime'
+  );
 
-  // Create the markup for the code snippet.
-  // TBD: Make code nicer looking, but ensure the indentation doesn't get messed up
-  const markup = `${widget.name}(${valueOnlyParams.map((param : any) => param.name === 'options' || param.name === 'default' || param.type === 'datetime' ? `${param.value}` : `'${param.value}'`).join(',')}${formattedBooleans !== undefined ? `,${formattedBooleans}` : ''}${formattedIntegers !== undefined ? `,${formattedIntegers}` : ''}${keywordValueParams.map((param : any) => `,${param.name}='${param.value}'`).join('')})`;
-  widget.snippet = markup;
+  // Formatting function for key-value params
+  if(keywordValueParams.length) {
+    markupParams.push(formatParams('key-value', keywordValueParams));
+  }
 
+  // Ok, so at this point we _should_ have all the params we need in a nice array.
+  // Now, it's time to piece it together and create the markup for the code snippet.
+  const flattenedParams = markupParams.flat();
+
+  // If you're changing the indentation here, BEWARE! It's purposefully done this way,
+  // so that python recognizes the snippet, and formats it this way:
+
+  // st.text_area(
+  //   'Caption goes here',
+  //   height=112,
+  //   value='This is what I really wanted to say...'
+  // )
+
+  // Happy to change this to a nicer-looking string, but if you're doing so,
+  // please be mindful of the above, and test it thoroughly!
+  const markup = `${widget.name}(
+  ${flattenedParams.map((param: string) => `
+  ${param}`).join(',')}
+)`;
+
+  // After the have the markup, we use a regex pattern to remove unnecesary line breaks,
+  // spaces, tabs, anything that might throw our formatting off.
+  const formattedMarkup = markup.replace(/^\s*[\r\n]/gm, "");
+  
+  // ...And finally, add the markup to the widget object, and send it back to the UI
+  widget.snippet = formattedMarkup;
   return widget;
 }
