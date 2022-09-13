@@ -4,7 +4,7 @@ import { data } from '../data/widgets';
 export const identifyWidget = (node: any) => {
   // Get the parent component, so we can grab the
   // Description and documentation link
-  const parent = node.masterComponent;
+  const parent = node.masterComponent.parent;
 
   // Compare the node name with our database, to retrieve the default data
   const selectedWidget = data.filter((widget) => widget.name === node.name);
