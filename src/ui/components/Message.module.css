@@ -29,16 +29,16 @@
 
 .WidgetName {
   @apply font-mono font-medium text-sm;
-  color: var(--figma-color-text);
+  color: var(--figma-color-text-tertiary);
 }
 
 .WidgetDescription {
-  color: var(--figma-color-text-secondary);
+  color: var(--figma-color-text-tertiary);
   @apply pt-1;
 }
 
 .CodeBlock {
-  @apply pt-4 text-xs;
+  @apply pt-4 text-xs whitespace-pre-wrap;
 
   /* To override the default color prism adds */
   background-color: var(--figma-color-bg) !important;
