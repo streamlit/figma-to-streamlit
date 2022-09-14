@@ -9,6 +9,7 @@ export const identifyWidget = (node: any) => {
   // Get the parent component, so we can grab the
   // Description and documentation link
   const parent = node.masterComponent.parent;
+  const docsLink = parent.documentationLinks.length ? parent.documentationLinks[0].uri : 'https://docs.streamlit.io';
 
   // Compare the node name with our database, to retrieve the default data
   const selectedWidget = data.filter((widget) => widget.name === node.name) as any;
@@ -16,14 +17,14 @@ export const identifyWidget = (node: any) => {
   // TODO: List of unsupported widgets for v0.1. We check these and throw an error for now
   const isWidgetUnsupported = unsupportedWidgets.filter((widget: any) => widget === selectedWidget[0].name);
   if(isWidgetUnsupported.length) {
-    resizeUI(300, 270);
-    dispatchUIMessage('error', 'We are sorry, but the widget you selected isn\'t supported yet on the plugin 😔. Check the roadmap to see when we\'ll be adding support for it!', { helpUrl: 'https://github.com/streamlit/figma-plugin#roadmap', helpText: 'Check the roadmap'});
+    resizeUI(300, 305);
+    dispatchUIMessage('error', 'We are sorry, but the widget you selected isn\'t supported yet on the plugin 😔. Check the roadmap to see when we\'ll be adding support for it, or view the docs to implement it yourself.', { helpUrl: 'https://github.com/streamlit/figma-plugin#roadmap', helpText: 'Check the roadmap', docsUrl: docsLink, docsText: `Browse our docs for ${selectedWidget[0].name}` });
     throw new Error('Unsupported widget');
   }
 
   const widgetData = {
     description: parent.description || '',
-    link: parent.documentationLinks.length ? parent.documentationLinks[0].uri : 'https://docs.streamlit.io',
+    link: docsLink,
     ...selectedWidget[0],
   };
 
