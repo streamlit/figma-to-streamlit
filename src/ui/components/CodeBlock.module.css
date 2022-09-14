@@ -29,6 +29,10 @@
   @apply pt-1;
 }
 
+.CollapsedDescription {
+  @apply line-clamp-3;
+}
+
 .CodeBlock {
   @apply py-4 text-xs overflow-x-scroll;
   scrollbar-color: #bfc5d3 #fafafa;
