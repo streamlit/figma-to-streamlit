@@ -5,7 +5,7 @@ import React from "react";
 import Highlight, { defaultProps } from "prism-react-renderer";
 import dracula from 'prism-react-renderer/themes/dracula';
 
-import styles from './Message.module.css';
+import styles from './CodeBlock.module.css';
 
 const Success = ({ message }) => {
   return (

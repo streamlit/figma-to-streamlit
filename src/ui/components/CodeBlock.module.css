@@ -1,0 +1,37 @@
+.WidgetDescription {
+  @apply text-xs;
+}
+
+.CodeContainer {
+  @apply p-4;
+}
+
+.DocsContainer {
+  @apply py-4;
+}
+
+.WidgetLink {
+  @apply text-xs;
+  color: var(--figma-color-bg-brand);
+}
+
+.WidgetLink:hover {
+  color: var(--figma-color-bg-brand-hover);
+}
+
+.WidgetName {
+  @apply font-mono font-medium text-sm;
+  color: var(--figma-color-text-tertiary);
+}
+
+.WidgetDescription {
+  color: var(--figma-color-text-tertiary);
+  @apply pt-1;
+}
+
+.CodeBlock {
+  @apply pt-4 text-xs;
+
+  /* To override the default color prism adds */
+  background-color: var(--figma-color-bg) !important;
+}
