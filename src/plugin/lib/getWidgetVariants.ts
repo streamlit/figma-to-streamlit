@@ -77,7 +77,7 @@ export const getWidgetVariants = (widget: any, node: InstanceNode) => {
         }
         const radioOptions = getOptionValues(radioGroup);
         const radioOptionsProp = findMatchingProp(widget, 'options');
-        radioOptionsProp.value = `${radioOptions?.map((option : any) => `'${option.value}',`).join('')}`;
+        radioOptionsProp.value = `${radioOptions?.map((option : any) => `'${option.value}'`)}`;
 
         // Here we check if any of the options is selected
         const selectedIndex = getIndexValues(radioGroup, radioOptions);
