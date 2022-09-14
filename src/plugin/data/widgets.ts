@@ -882,7 +882,7 @@ export const data = [
         "type": "int",
         "defaultValue": "",
         "required": false,
-        "keyValue": true
+        "keyValue": false
       },
       {
         "name": "step",
