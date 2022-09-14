@@ -49,9 +49,11 @@ export const generateMarkup = (widget: any) => {
 
   // Now, let's get integers. These should:
   // 1. be integers;
-  // 2. have a value set.
+  // 2. have a value set;
+  // 3. be visible, or required
   const integerParams = widget.parameters.filter((param: any) =>
-    param.type === 'int' && param.value !== undefined
+    param.type === 'int' && param.value !== undefined && param.visible === true ||
+    param.type === 'int' && param.value !== undefined && param.required === true
   );
   
   // Now, into formatting them

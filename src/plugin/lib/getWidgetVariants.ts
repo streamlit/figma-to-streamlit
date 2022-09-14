@@ -20,6 +20,25 @@ export const getWidgetVariants = (widget: any, node: InstanceNode) => {
       case 'value':
         const widgetValue = node.componentProperties[property].value === 'True';
         const valueProp = findMatchingProp(widget, property);
+
+        // st.slider and st.select_slider use the "Value" variant to hide/show
+        // the track/thumb elements, so we need to check whether it's active or not, to:
+        // 1. Hide the value if "false";
+        // 2. Show the actual value if "true", instead of returning a boolean
+        if(widget.name === 'st.slider' || widget.name === 'st.select_slider') {     
+
+          // If this condition is met, exit the fn since we'll get the value
+          // on the next getChildrenProps step
+          if(widgetValue === true) {
+            break;
+          }
+          // If not, make the prop invisible
+          else {
+            valueProp.visible = false;
+            break;
+          }
+        }
+
         valueProp.value = widgetValue;
         break;
       // Check if help text is visible
@@ -32,7 +51,9 @@ export const getWidgetVariants = (widget: any, node: InstanceNode) => {
       // which translate into an array of values. For those, we should loop through all
       // and get the values, even if the layer is invisible, as they are required props
       case 'options':
-        // We don't want to do this for st.time_input though
+
+        // We don't want to do this for st.time_input though,
+        // since options in time_input are populated automatically
         if(widget.name === 'st.time_input') break;
         
         const optionsParent = node.children[node.children.length - 1] as any;
@@ -54,6 +75,7 @@ export const getWidgetVariants = (widget: any, node: InstanceNode) => {
       // st.multiselect also has a "default" param, that is used to select the values we'd like
       // to show on first render in the widget. So let's grab those, if they exist!
       case 'default':
+
         // First we need to get to the Default node
         const inputContainer = node.findChild(n => n.name === 'Input') as InstanceNode;
         const defaultContainer = inputContainer.findChild(n => n.name === 'Default') as InstanceNode;
@@ -68,6 +90,7 @@ export const getWidgetVariants = (widget: any, node: InstanceNode) => {
         break;
       // For radio buttons' horizontal layout
       case 'horizontal':
+
         // Here we check if radio buttons use the "horizontal" attribute, and add the value
         const isHorizontal = node.componentProperties[property].value === 'True';
         const horizontalProp = findMatchingProp(widget, property);
@@ -93,6 +116,7 @@ export const getWidgetVariants = (widget: any, node: InstanceNode) => {
 
         break;
       default:
+
         // Many of our variants are heavily used in the Figma library,
         // but not all of them are translated into code,
         // (for example theme, focus state), so for those don't do anything

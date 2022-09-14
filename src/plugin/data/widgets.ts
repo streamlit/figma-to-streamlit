@@ -705,6 +705,13 @@ export const data = [
         "keyValue": false
       },
       {
+        "name": "value",
+        "type": "list",
+        "defaultValue": "()",
+        "required": false,
+        "keyValue": false
+      },
+      {
         "name": "format_func",
         "type": "function",
         "defaultValue": "",
