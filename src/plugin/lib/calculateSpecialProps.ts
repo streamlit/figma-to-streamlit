@@ -23,6 +23,11 @@ export const calculateSpecialProps = (widget: any, node: InstanceNode) => {
         throw new Error('Value provided is not valid. Make sure it\'s hh:mm');
       }
       break;
+    // For download_button, we need to set something to download
+    case 'st.download_button':
+      const dataProp = findMatchingProp(widget, 'data');
+      dataProp.value = "This is some text";
+      break;
     // For color picker, let's get the hex value
     case 'st.color_picker':
       const hexValueContainer = node.findChildren(n => n.name === 'Value') as any;

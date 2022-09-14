@@ -239,7 +239,7 @@ export const data = [
         "type": "str",
         "defaultValue": "",
         "required": true,
-        "keyValue": false
+        "keyValue": true
       },
       {
         "name": "file_name",
