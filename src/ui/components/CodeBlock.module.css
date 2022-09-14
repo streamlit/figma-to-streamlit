@@ -30,8 +30,20 @@
 }
 
 .CodeBlock {
-  @apply pt-4 text-xs;
+  @apply py-4 text-xs overflow-x-scroll;
+  scrollbar-color: #bfc5d3 #fafafa;
+  scrollbar-width: thin;
 
   /* To override the default color prism adds */
   background-color: var(--figma-color-bg) !important;
+}
+
+::-webkit-scrollbar {
+  height: .25rem;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background-color: var(--figma-color-bg-secondary);
 }
