@@ -3,13 +3,11 @@ export const formatParams = (type: string, params: any) => {
   switch(type) {
     case 'value-only':
       return params.map((param : any) =>
-        // For options and defaults, wrap them in parenthesis
+        // Depending on the type of param, we add or remove single quotes to wrap it
         param.name === 'options' ||
         param.name === 'default' ?
-        `(${param.value})` :
-        // For datetime inputs, remove the quotes
-        param.type === 'datetime' ?
-        `${param.value}` : `'${param.value}'`)
+        `${param.value}` : `'${param.value}'`
+      )
     case 'key-value':
       return params.map((param : any) => 
         `${param.name}='${param.value}'`)

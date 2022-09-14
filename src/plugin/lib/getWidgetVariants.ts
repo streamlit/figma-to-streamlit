@@ -42,7 +42,13 @@ export const getWidgetVariants = (widget: any, node: InstanceNode) => {
         const optionsProp = findMatchingProp(widget, property);
 
         // Do a bit of formatting here as well
-        optionsProp.value = `(${options?.map((option : any) => `'${option.value}'${options.length === 1 ? ',' : ''}`).join(',')})`;
+        if(widget.name === 'st.selectbox') {
+          // For selectboxes, wrap them in parenthesis
+          optionsProp.value = `(${options?.map((option : any) => `'${option.value}'`).join(',')})`;
+        } else if(widget.name === 'st.multiselect') {
+          // For multi selectors, wrap them in square brackets
+          optionsProp.value = `[${options?.map((option : any) => `'${option.value}'`).join(',')}]`;
+        }
 
         break;
       // st.multiselect also has a "default" param, that is used to select the values we'd like
@@ -50,11 +56,10 @@ export const getWidgetVariants = (widget: any, node: InstanceNode) => {
       case 'default':
         // First we need to get to the Default node
         const inputContainer = node.findChild(n => n.name === 'Input') as InstanceNode;
-        const defaultContainer = inputContainer.findChild(n => n.name === 'Selected') as InstanceNode;
-        const defaultOptions = defaultContainer.findChild(n => n.name === 'Default');
-        const defaults = getDefaultValues(defaultOptions);
-
-        if(defaults.length) {
+        const defaultContainer = inputContainer.findChild(n => n.name === 'Default') as InstanceNode;
+        const defaults = getDefaultValues(defaultContainer);
+        
+        if(defaults?.length) {
           const defaultProp = findMatchingProp(widget, property);
           defaultProp.value = `[${defaults?.map((option : any) => `'${option.value}'`).join(',')}]`;
           defaultProp.visible = true;

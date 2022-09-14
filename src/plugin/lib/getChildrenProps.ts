@@ -18,8 +18,10 @@ export const getChildrenProps = (widget: any, children: any) => {
         matchingProp.visible = child.visible;
       }
 
-      // Add its value
-      matchingProp.value = child.characters;
+      // Add its value if it's not present
+      if(matchingProp.value === undefined) {
+        matchingProp.value = child.characters;
+      }
     }
   });
 
