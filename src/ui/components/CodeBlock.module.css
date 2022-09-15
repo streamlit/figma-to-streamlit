@@ -59,7 +59,7 @@
 
 /* Click to copy button */
 .ClickToCopy {
-  @apply absolute top-4 right-0 hover:opacity-80 transition ease-in-out duration-75;
+  @apply absolute top-4 right-0 transition ease-in-out duration-75;
 }
 
 .Tooltip {
