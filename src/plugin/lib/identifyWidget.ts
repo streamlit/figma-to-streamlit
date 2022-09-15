@@ -12,7 +12,8 @@ export const identifyWidget = (node: any) => {
   const docsLink = parent.documentationLinks.length ? parent.documentationLinks[0].uri : 'https://docs.streamlit.io';
 
   // Compare the node name with our database, to retrieve the default data
-  const selectedWidget = data.filter((widget) => widget.name === node.name) as any;
+  const clonedData = JSON.parse(JSON.stringify(data));
+  const selectedWidget = clonedData.filter((widget: any) => widget.name === node.name) as any;
 
   // TODO: List of unsupported widgets for v0.1. We check these and throw an error for now
   const isWidgetUnsupported = unsupportedWidgets.filter((widget: any) => widget === selectedWidget[0].name);
