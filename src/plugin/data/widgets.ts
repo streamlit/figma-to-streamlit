@@ -958,7 +958,7 @@ export const data = [
         "type": "str",
         "defaultValue": "",
         "required": false,
-        "keyValue": true
+        "keyValue": false
       },
       {
         "name": "placeholder",
