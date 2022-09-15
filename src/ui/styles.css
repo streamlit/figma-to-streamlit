@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Light theme adjustments */
+.figma-light .container h2, .figma-light .container p {
+  color: var(--figma-color-text-secondary);
+}
+
+.figma-light pre {
+  @apply p-4 rounded-md mt-4;
+  background-color: var(--figma-color-bg-hover) !important;
+}
+
+.figma-light .container button {
+  @apply top-2 right-2;
+}
+
+.figma-light .container button span {
+  color: var(--figma-color-bg-disabled-secondary);
+}
+
+.figma-light .token-line, .figma-light .token.punctuation {
+  color: var(--figma-color-text-secondary) !important;
+}

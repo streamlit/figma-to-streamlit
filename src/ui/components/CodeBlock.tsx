@@ -19,7 +19,7 @@ const Success = ({ message }) => {
   }
 
   return (
-    <section className={styles.Container}>
+    <section className={`${styles.Container} container`}>
       {message.data &&
         <>
           <h2 className={styles.WidgetName}>{message.data.name}</h2>

@@ -16,7 +16,7 @@
 }
 
 .ErrorContainer p, .ErrorContainer a {
-  color: var(--figma-color-text);
+  color: white;
 }
 
 .SuccessContainer {

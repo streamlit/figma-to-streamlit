@@ -8,7 +8,7 @@
 }
 
 .Description {
-  @apply font-light py-4 text-xs;
+  @apply py-4 text-xs;
   color: var(--figma-color-text-secondary);
 }
 
@@ -21,4 +21,5 @@
 .Cta:hover {
   background-color: var(--figma-color-bg-brand);
   border-color: var(--figma-color-bg-brand);
+  color: white;
 }
