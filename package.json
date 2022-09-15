@@ -32,6 +32,7 @@
     "@tailwindcss/line-clamp": "^0.4.2",
     "autoprefixer": "^10.4.9",
     "concurrently": "^7.3.0",
+    "copy-to-clipboard": "^3.3.2",
     "esbuild": "^0.15.5",
     "postcss": "^8.4.16",
     "prettier": "^2.7.1",

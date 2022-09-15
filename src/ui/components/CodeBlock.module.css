@@ -2,7 +2,7 @@
   @apply text-xs;
 }
 
-.CodeContainer {
+.Container {
   @apply p-4;
 }
 
@@ -33,6 +33,10 @@
   @apply line-clamp-3;
 }
 
+.CodeBlockContainer {
+  @apply relative;
+}
+
 .CodeBlock {
   @apply py-4 text-xs overflow-x-scroll;
   scrollbar-color: #bfc5d3 #fafafa;
@@ -51,4 +55,14 @@
 ::-webkit-scrollbar-thumb {
   border-radius: 9999px;
   background-color: var(--figma-color-bg-secondary);
+}
+
+/* Click to copy button */
+.ClickToCopy {
+  @apply absolute top-4 right-0 hover:opacity-80 transition ease-in-out duration-75;
+}
+
+.Tooltip {
+  @apply text-xs absolute right-6 top-0 transition ease-in-out duration-75;
+  color: var(--figma-color-text-tertiary);
 }
