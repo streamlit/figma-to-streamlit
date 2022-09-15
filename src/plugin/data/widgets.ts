@@ -1041,7 +1041,7 @@ export const data = [
         "type": "datetime",
         "defaultValue": "",
         "required": false,
-        "keyValue": true
+        "keyValue": false
       },
       {
         "name": "min_value",

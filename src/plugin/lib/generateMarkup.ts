@@ -24,8 +24,7 @@ export const generateMarkup = (widget: any) => {
   const valueOnlyParams = valueParams.filter((param: any) => 
     
     // We also exclude here some specific types, since we handle those separately below
-    param.keyValue === false && param.type !== 'int' &&
-    param.keyValue === false && param.type !== 'datetime'
+    param.keyValue === false && param.type !== 'int'
   );
 
   // Formatting function for value-only params
@@ -65,8 +64,7 @@ export const generateMarkup = (widget: any) => {
   // We're also removing some specific values that are handled below
   const keywordValueParams = valueParams.filter((param: any) => 
     param.keyValue === true && param.type !== 'bool' &&
-    param.keyValue === true && param.type !== 'int' && 
-    param.keyValue === true && param.type !== 'datetime'
+    param.keyValue === true && param.type !== 'int'
   );
 
   // Formatting function for key-value params

@@ -5,6 +5,7 @@ export const formatParams = (type: string, params: any) => {
       return params.map((param : any) =>
         // Depending on the type of param, we add or remove single quotes to wrap it
         param.name === 'options' ||
+        param.type === 'datetime' ||
         param.name === 'default' ?
         `${param.value}` : `'${param.value}'`
       )

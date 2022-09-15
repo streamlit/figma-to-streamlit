@@ -16,9 +16,14 @@ export const calculateSpecialProps = (widget: any, node: InstanceNode) => {
       // Grab the value we have, and check if it's a valid format
       const valueProp = findMatchingProp(widget, 'value');
       const isValidDateTime = valueProp.value.match(/\d+/g);
+
+      // This here ensures we don't run into the "leading zeros in decimal integer
+      // literals are not permitted" error
+      const dateTimeWithoutInitialZero = isValidDateTime.map((number: string) => number.match("^[0]") ? number.substring(1) : number);
       
       if(isValidDateTime !== null && isValidDateTime.length === 2) {
-        valueProp.value = `datetime.time(${isValidDateTime[0]}, ${isValidDateTime[1]})`;
+        // If it's valid, add it!
+        valueProp.value = `datetime.time(${dateTimeWithoutInitialZero[0]}, ${dateTimeWithoutInitialZero[1]})`;
       } else {
         throw new Error('Value provided is not valid. Make sure it\'s hh:mm');
       }
