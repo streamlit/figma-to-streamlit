@@ -1,5 +1,5 @@
 {
-  "name": "figma_to_streamlit",
+  "name": "Figma to Streamlit",
   "id": "1143622264502622674",
   "api": "1.0.0",
   "main": "dist/code.js",
