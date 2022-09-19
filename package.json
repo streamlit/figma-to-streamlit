@@ -1,6 +1,6 @@
 {
-  "name": "st-command-generator",
-  "version": "1.0.0",
+  "name": "figma-to-streamlit",
+  "version": "0.1.0",
   "description": "A plugin to generate st. commands with their corresponding parameters, based on the components from our existing Figma library",
   "scripts": {
     "test": "npm run tsc && npm run build",

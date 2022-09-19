@@ -105,13 +105,15 @@ export const getWidgetVariants = (widget: any, node: InstanceNode) => {
         }
         const radioOptions = getOptionValues(radioGroup);
         const radioOptionsProp = findMatchingProp(widget, 'options');
-        radioOptionsProp.value = `${radioOptions?.map((option : any) => `'${option.value}'`)}`;
+        const isOnlyOneRadioVisible = radioOptions.length === 1;
+        radioOptionsProp.value = `(${radioOptions?.map((option : any) => `'${option.value}'${isOnlyOneRadioVisible ? ',' : ''}`)})`;
 
-        // Here we check if any of the options is selected
+        // Here we check if any of the options are selected
         const selectedIndex = getIndexValues(radioGroup, radioOptions);
-        if(selectedIndex !== undefined) {
+        if(selectedIndex !== undefined && !isOnlyOneRadioVisible) {
           const indexProp = findMatchingProp(widget, 'index');
           indexProp.value = selectedIndex;
+          indexProp.visible = true;
         }
 
         break;
