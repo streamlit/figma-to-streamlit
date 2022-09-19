@@ -1426,4 +1426,129 @@ export const data = [
       },
     ]
   },
+  {
+    "category": "charts",
+    "name": "st.area_chart",
+    "shouldUsePlaceholder": true,
+    "placeholderData": ["pd.DataFrame(np.random.randn(20, 3)", "columns=['a', 'b', 'c'])"],
+    "imports": ["import streamlit as st", "import pandas as pd", "import numpy as np"],
+    "parameters": [
+      {
+        "name": "data",
+        "type": "list",
+        "defaultValue": "[]",
+        "required": true,
+        "keyValue": false
+      },
+      {
+        "name": "x",
+        "type": "str",
+        "defaultValue": "0",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "y",
+        "type": "str",
+        "defaultValue": "[]",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "width",
+        "type": "int",
+        "defaultValue": "0",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "height",
+        "type": "int",
+        "defaultValue": "auto",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "use_container_width",
+        "type": "bool",
+        "defaultValue": false,
+        "required": false,
+        "keyValue": true
+      },
+    ]
+  },
+  {
+    "category": "charts",
+    "name": "st.bar_chart",
+    "shouldUsePlaceholder": true,
+    "placeholderData": ["pd.DataFrame(np.random.randn(50, 3)", "columns=['a', 'b', 'c'])"],
+    "imports": ["import streamlit as st", "import pandas as pd", "import numpy as np"],
+    "parameters": [
+      {
+        "name": "data",
+        "type": "list",
+        "defaultValue": "[]",
+        "required": true,
+        "keyValue": false
+      },
+      {
+        "name": "x",
+        "type": "str",
+        "defaultValue": "0",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "y",
+        "type": "str",
+        "defaultValue": "[]",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "width",
+        "type": "int",
+        "defaultValue": "0",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "height",
+        "type": "int",
+        "defaultValue": "auto",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "use_container_width",
+        "type": "bool",
+        "defaultValue": false,
+        "required": false,
+        "keyValue": true
+      },
+    ]
+  },
+  {
+    "category": "charts",
+    "name": "st.map",
+    "shouldUsePlaceholder": true,
+    "placeholderData": ["pd.DataFrame(np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4],", "columns=['lat', 'lon'])"],
+    "imports": ["import streamlit as st", "import pandas as pd", "import numpy as np"],
+    "parameters": [
+      {
+        "name": "data",
+        "type": "list",
+        "defaultValue": "[]",
+        "required": true,
+        "keyValue": false
+      },
+      {
+        "name": "zoom",
+        "type": "int",
+        "defaultValue": "0",
+        "required": false,
+        "keyValue": true
+      },
+    ]
+  },
 ]
