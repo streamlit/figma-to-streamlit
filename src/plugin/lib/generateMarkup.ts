@@ -76,9 +76,14 @@ export const generateMarkup = (widget: any) => {
   // Now, it's time to piece it together and create the markup for the code snippet.
   const flattenedParams = markupParams.flat();
 
-  // If you're changing the indentation here, BEWARE! It's purposefully done this way,
+  // Get the imports we need to add the beginning of the snippet
+  const imports = widget.imports.map((importStr: string) => importStr).join('\n');
+
+  // If you're changing the indentation below, BEWARE! It's purposefully done this way,
   // so that python recognizes the snippet, and formats it this way:
 
+  // import streamlit as st
+  // 
   // st.text_area(
   //   'Caption goes here',
   //   height=112,
@@ -95,8 +100,11 @@ export const generateMarkup = (widget: any) => {
   // After the have the markup, we use a regex pattern to remove unnecesary line breaks,
   // spaces, tabs, anything that might throw our formatting off.
   const formattedMarkup = markup.replace(/^\s*[\r\n]/gm, "");
+
+  // Gather imports and markup in the same snippet
+  const finalMarkup = `${imports}${'\n\n'}${formattedMarkup}`;
   
   // ...And finally, add the markup to the widget object, and send it back to the UI
-  widget.snippet = formattedMarkup;
+  widget.snippet = finalMarkup;
   return widget;
 }

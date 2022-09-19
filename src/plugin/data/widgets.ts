@@ -3,6 +3,7 @@ export const data = [
   {
     "category": "write-and-magic",
     "name": "st.write",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "args",
@@ -24,6 +25,7 @@ export const data = [
   {
     "category": "text",
     "name": "st.title",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "body",
@@ -44,6 +46,7 @@ export const data = [
   {
     "category": "text",
     "name": "st.header",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "body",
@@ -64,6 +67,7 @@ export const data = [
   {
     "category": "text",
     "name": "st.subheader",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "body",
@@ -84,6 +88,7 @@ export const data = [
   {
     "category": "text",
     "name": "st.caption",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "body",
@@ -104,6 +109,7 @@ export const data = [
   {
     "category": "text",
     "name": "st.markdown",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "body",
@@ -124,6 +130,7 @@ export const data = [
   {
     "category": "text",
     "name": "st.text",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "body",
@@ -137,6 +144,7 @@ export const data = [
   {
     "category": "text",
     "name": "st.latex",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "body",
@@ -150,6 +158,7 @@ export const data = [
   {
     "category": "text",
     "name": "st.code",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "body",
@@ -171,6 +180,7 @@ export const data = [
   {
     "category": "widgets",
     "name": "st.button",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "label",
@@ -226,6 +236,7 @@ export const data = [
   {
     "category": "widgets",
     "name": "st.download_button",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "label",
@@ -302,6 +313,7 @@ export const data = [
   {
     "category": "widgets",
     "name": "st.checkbox",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "label",
@@ -364,6 +376,7 @@ export const data = [
   {
     "category": "widgets",
     "name": "st.radio",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "label",
@@ -447,6 +460,7 @@ export const data = [
   {
     "category": "widgets",
     "name": "st.selectbox",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "label",
@@ -523,6 +537,7 @@ export const data = [
   {
     "category": "widgets",
     "name": "st.multiselect",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "label",
@@ -599,6 +614,7 @@ export const data = [
   {
     "category": "widgets",
     "name": "st.slider",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "label",
@@ -689,6 +705,7 @@ export const data = [
   {
     "category": "widgets",
     "name": "st.select_slider",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "label",
@@ -765,6 +782,7 @@ export const data = [
   {
     "category": "widgets",
     "name": "st.text_input",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "label",
@@ -855,6 +873,7 @@ export const data = [
   {
     "category": "widgets",
     "name": "st.number_input",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "label",
@@ -945,6 +964,7 @@ export const data = [
   {
     "category": "widgets",
     "name": "st.text_area",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "label",
@@ -1028,6 +1048,7 @@ export const data = [
   {
     "category": "widgets",
     "name": "st.date_input",
+    "imports": ["import streamlit as st", "import datetime as dt"],
     "parameters": [
       {
         "name": "label",
@@ -1104,6 +1125,7 @@ export const data = [
   {
     "category": "widgets",
     "name": "st.time_input",
+    "imports": ["import streamlit as st", "import datetime as dt"],
     "parameters": [
       {
         "name": "label",
@@ -1166,6 +1188,7 @@ export const data = [
   {
     "category": "widgets",
     "name": "st.file_uploader",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "label",
@@ -1235,6 +1258,7 @@ export const data = [
   {
     "category": "widgets",
     "name": "st.camera_input",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "label",
@@ -1290,6 +1314,7 @@ export const data = [
   {
     "category": "widgets",
     "name": "st.color_picker",
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "label",
@@ -1344,6 +1369,58 @@ export const data = [
         "name": "kwargs",
         "type": "dict",
         "defaultValue": "",
+        "required": false,
+        "keyValue": true
+      },
+    ]
+  },
+  // Chart elements
+  {
+    "category": "charts",
+    "name": "st.line_chart",
+    "shouldUsePlaceholder": true,
+    "placeholderData": ["pd.DataFrame(np.random.randn(20, 3)", "columns=['a', 'b', 'c'])"],
+    "imports": ["import streamlit as st", "import pandas as pd", "import numpy as np"],
+    "parameters": [
+      {
+        "name": "data",
+        "type": "list",
+        "defaultValue": "[]",
+        "required": true,
+        "keyValue": false
+      },
+      {
+        "name": "x",
+        "type": "str",
+        "defaultValue": "0",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "y",
+        "type": "str",
+        "defaultValue": "[]",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "width",
+        "type": "int",
+        "defaultValue": "0",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "height",
+        "type": "int",
+        "defaultValue": "auto",
+        "required": false,
+        "keyValue": true
+      },
+      {
+        "name": "use_container_width",
+        "type": "bool",
+        "defaultValue": false,
         "required": false,
         "keyValue": true
       },
