@@ -1,44 +1,32 @@
-# Figma to Streamlit
+# Figma to Streamlit plugin
 
-A plugin to generate `st.` commands with their corresponding parameters, based on the components from [our existing Figma library]()
+![Intro image](https://user-images.githubusercontent.com/34423371/191044666-55e3cf5f-ce1e-4f43-b0ad-f4ff1d8a9c82.png)
 
-Below are the steps to get your plugin running. You can also find instructions at:
+A plugin to generate `st.` commands with their corresponding parameters and values, based on the components from [our existing Figma library]().
 
-  https://www.figma.com/plugin-docs/setup/
+> **Note**
+> **Heads up!**
+> This is an experiment from our design team. We’re releasing early to get feedback, and there’s [a lot of stuff missing](https://github.com/streamlit/figma-to-streamlit#roadmap). If you find this useful, please contribute! See our [contributing section](https://github.com/streamlit/figma-to-streamlit#contributing) below.
+
+## Installation
+
+Go to our [community profile]() and hit `Try it out`. Then, in Figma, run it from the `Plugins` tab.
+
+## Contributing
+
+Thanks for your interest in helping with this plugin's development! Please see the instructions below to intall it locally, and contributing guidelines.
+
+### Running the plugin locally
+
+> **Note**
+> Below are the steps to get your plugin running in your machine. You can also find more detailed instructions in [Figma's setup guide](https://www.figma.com/plugin-docs/setup/).
 
 This plugin template uses Typescript and NPM, two standard tools in creating JavaScript applications.
 
-First, download Node.js which comes with NPM. This will allow you to install TypeScript and other
-libraries. You can find the download link here:
+1. First, download Node.js which comes with NPM. This will allow you to install TypeScript and other libraries. You can find the download link [here](https://nodejs.org/en/download/).
+2. Second, install Typescript: `npm install -g typescript`.
+3. Then, clone the repo: `git clone https://github.com/streamlit/figma-to-streamlit`.
+4. `cd` into the `figma-to-streamlit` directory, and run `npm install`.
+5. After you've installed the dependencies, run `npm run dev` on your terminal, to build the plugin.
 
-  https://nodejs.org/en/download/
-
-Next, install TypeScript using the command:
-
-  npm install -g typescript
-
-Finally, in the directory of your plugin, get the latest type definitions for the plugin API by running:
-
-  npm install --save-dev @figma/plugin-typings
-
-If you are familiar with JavaScript, TypeScript will look very familiar. In fact, valid JavaScript code
-is already valid Typescript code.
-
-TypeScript adds type annotations to variables. This allows code editors such as Visual Studio Code
-to provide information about the Figma API while you are writing code, as well as help catch bugs
-you previously didn't notice.
-
-For more information, visit https://www.typescriptlang.org/
-
-Using TypeScript requires a compiler to convert TypeScript (code.ts) into JavaScript (code.js)
-for the browser to run.
-
-We recommend writing TypeScript code using Visual Studio code:
-
-1. Download Visual Studio Code if you haven't already: https://code.visualstudio.com/.
-2. Open this directory in Visual Studio Code.
-3. Compile TypeScript to JavaScript: Run the "Terminal > Run Build Task..." menu item,
-    then select "npm: watch". You will have to do this again every time
-    you reopen Visual Studio Code.
-
-That's it! Visual Studio Code will regenerate the JavaScript file every time you save.
+### Loading the development version of the plugin in Figma
