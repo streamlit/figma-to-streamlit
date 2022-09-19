@@ -10,8 +10,9 @@ import { checkSelection } from './lib/checkSelection';
 import { identifyWidget } from './lib/identifyWidget';
 import { getWidgetVariants } from './lib/getWidgetVariants';
 import { getChildrenProps } from './lib/getChildrenProps';
-import { generateMarkup } from './lib/generateMarkup';
 import { calculateSpecialProps } from './lib/calculateSpecialProps';
+import { generateMarkup } from './lib/generateMarkup';
+import { generatePlaceholderMarkup } from './lib/generatePlaceholderMarkup';
 
 // This shows the HTML page in "ui.html", and adds a small height to it
 figma.showUI(__html__, { themeColors: true, height: 155 });
@@ -60,8 +61,17 @@ figma.ui.onmessage = msg => {
           // or we can pipe the hex value in st.color_picker, so this function does that!
           calculateSpecialProps(widget, nodeInstance);
 
-          // ...and generate the markup for the widget
-          const widgetWithMarkup = generateMarkup(widget);
+          let widgetWithMarkup;
+
+          // Some widgets, such as charts, are too complex to generate them based on the data
+          // provided in Figma. For those, we use placeholder snippets.
+          if(widget.shouldUsePlaceholder && widget.shouldUsePlaceholder === true) {
+            widgetWithMarkup = generatePlaceholderMarkup(widget);
+          } else {
+            // For standard widgets, we generate the markup here
+            widgetWithMarkup = generateMarkup(widget);
+          }
+
 
           // After we got the data, update the plugin UI
           resizeUI(300, 500);
