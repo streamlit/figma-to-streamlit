@@ -14,8 +14,8 @@ export const calculateSpecialProps = (widget: any, node: InstanceNode) => {
     // For time input, the value needs to be turned into a datetime object
     case 'st.time_input':
       // Grab the value we have, and check if it's a valid format
-      const valueProp = findMatchingProp(widget, 'value');
-      const isValidDateTime = valueProp.value.match(/\d+/g);
+      const timeValueProp = findMatchingProp(widget, 'value');
+      const isValidDateTime = timeValueProp.value.match(/\d+/g);
 
       // This here ensures we don't run into the "leading zeros in decimal integer
       // literals are not permitted" error
@@ -23,9 +23,28 @@ export const calculateSpecialProps = (widget: any, node: InstanceNode) => {
       
       if(isValidDateTime !== null && isValidDateTime.length === 2) {
         // If it's valid, add it!
-        valueProp.value = `datetime.time(${dateTimeWithoutInitialZero[0]}, ${dateTimeWithoutInitialZero[1]})`;
+        timeValueProp.value = `dt.time(${dateTimeWithoutInitialZero[0]}, ${dateTimeWithoutInitialZero[1]})`;
       } else {
         throw new Error('Value provided is not valid. Make sure it\'s hh:mm');
+      }
+      break;
+    // For date input, we should also turn the value into a datetime object,
+    // but the output needs to be formatted in a slightly different way
+    case 'st.date_input':
+      // Grab the value we have, and check if it's a valid format
+      const dateValueProp = findMatchingProp(widget, 'value');
+      const isValidDate = dateValueProp.value.match(/\d+/g);
+
+      
+      // This here ensures we don't run into the "leading zeros in decimal integer
+      // literals are not permitted" error
+      const dateWithoutInitialZero = isValidDate.map((number: string) => number.match("^[0]") ? number.substring(1) : number);
+      
+      if(isValidDate !== null && isValidDate.length === 3) {
+        // If it's valid, add it!
+        dateValueProp.value = `dt.date(${dateWithoutInitialZero[0]}, ${dateWithoutInitialZero[1]}, ${dateWithoutInitialZero[2]})`;
+      } else {
+        throw new Error('Value provided is not valid. Make sure it\'s yyyy/mm/dd');
       }
       break;
     // For download_button, we need to set something to download
