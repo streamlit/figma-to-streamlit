@@ -48,7 +48,7 @@ The latest version of the plugin features support for the following widget categ
 * [Native Chart elements](https://docs.streamlit.io/library/api-reference/charts) (that is, `st.line_chart`, `st.bar_chart`, `st.area_chart`, `st.map`)
 
 > **Note**
-> **Friendly reminder**
+> **Friendly reminder:**
 > Keep in mind this is an experiment from our design team. We’re releasing early to get feedback, and as you can see, there’s a lot of stuff missing. If you find the plugin useful, please contribute! See our [contributing section](https://github.com/streamlit/figma-to-streamlit#contributing) below.
 
 ### Upcoming releases
