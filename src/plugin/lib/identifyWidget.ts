@@ -15,11 +15,17 @@ export const identifyWidget = (node: any) => {
   const clonedData = JSON.parse(JSON.stringify(data));
   const selectedWidget = clonedData.filter((widget: any) => widget.name === node.name) as any;
 
+  if(!selectedWidget[0]) {
+    resizeUI(300, 285);
+    dispatchUIMessage('error', 'We are sorry, but we couldn\'t identify this widget. Make sure it\'s coming from our official library, it\'s a valid instance, and you haven\'t renamed it. If the issue persist, check our troubleshooting guide below.', { helpUrl: 'https://github.com/streamlit/figma-to-streamlit#troubleshooting', helpText: 'See troubleshooting guide' });
+    throw new Error('Unknown widget.');
+  }
+
   // TODO: List of unsupported widgets for v0.1. We check these and throw an error for now
   const isWidgetUnsupported = unsupportedWidgets.filter((widget: any) => widget === selectedWidget[0].name);
   if(isWidgetUnsupported.length) {
     resizeUI(300, 305);
-    dispatchUIMessage('error', 'We are sorry, but the widget you selected isn\'t supported yet on the plugin 😔. Check the roadmap to see when we\'ll be adding support for it, or view the docs to implement it yourself.', { helpUrl: 'https://github.com/streamlit/figma-plugin#roadmap', helpText: 'Check the roadmap', docsUrl: docsLink, docsText: `Browse our docs for ${selectedWidget[0].name}` });
+    dispatchUIMessage('error', 'We are sorry, but the widget you selected isn\'t supported yet on the plugin 😔. Check the roadmap to see when we\'ll be adding support for it, or view the docs to implement it yourself.', { helpUrl: 'https://github.com/streamlit/figma-to-streamlit#roadmap', helpText: 'Check the roadmap', docsUrl: docsLink, docsText: `Browse our docs for ${selectedWidget[0].name}` });
     throw new Error('Unsupported widget');
   }
 
