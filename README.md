@@ -135,6 +135,10 @@ npm install
 npm run dev
 ```
 
+If all goes well, you should see an output similar to the following on your Terminal 👇
+
+![output 1](https://user-images.githubusercontent.com/34423371/191566540-48a72a0a-8da9-44c4-a229-b35f94b128ed.png)
+
 Make sure to keep the process running while you are developing to automatically watch the files for changes.
 
 ### Loading the development version of the plugin in Figma
