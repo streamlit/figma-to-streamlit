@@ -4,7 +4,7 @@
 
 A plugin to generate `st.` commands with their corresponding parameters and values, based on the components from [our existing Figma library]().
 
-> **Note**
+> **Warning**
 > **Heads up!**
 > This is an experiment from our design team. We’re releasing early to get feedback, and there’s [a lot of stuff missing](https://github.com/streamlit/figma-to-streamlit#roadmap). If you find this useful, please contribute! See our [contributing section](https://github.com/streamlit/figma-to-streamlit#contributing) below.
 
@@ -14,7 +14,7 @@ Go to our [community profile](), select the plugin and hit `Try it out`. Then, i
 
 ## How to use the plugin
 
-This plugin is complementary to our [official Design System library](). Select a component instance, tweak its props and values, and hit "See my code" to get a code snippet you can use in your Streamlit app! Check out the video below to get a sense of how to use it 👇
+This plugin is complementary to our [official Design System library](). Select a component instance, tweak its props and values, and hit `See my code` to get a code snippet you can use in your Streamlit app! Check out the video below to get a sense of how to use it 👇
 
 https://user-images.githubusercontent.com/34423371/191323837-34a489a7-0534-49f7-b42f-1270ed1dc895.mov
 
@@ -47,7 +47,7 @@ The latest version of the plugin features support for the following widget categ
 * [Input widgets](https://docs.streamlit.io/library/api-reference/widgets), except for `st.select_slider`.
 * [Native Chart elements](https://docs.streamlit.io/library/api-reference/charts) (that is, `st.line_chart`, `st.bar_chart`, `st.area_chart`, `st.map`)
 
-> **Note**
+> **Warning**
 > **Friendly reminder:**
 > Keep in mind this is an experiment from our design team. We’re releasing early to get feedback, and as you can see, there’s a lot of stuff missing. If you find the plugin useful, please contribute! See our [contributing section](https://github.com/streamlit/figma-to-streamlit#contributing) below.
 
@@ -79,7 +79,7 @@ Want to see something else added on this list? [File an issue](https://github.co
 
 Do you have any ideas or improvements on what we currently support with the plugin? Or found a bug that you couldn't figure out with our [troubleshooting guide](https://github.com/streamlit/figma-to-streamlit#troubleshooting)? Want to ask us a question? Feel free to use our [issue tracker](https://github.com/streamlit/figma-to-streamlit/issues) to let us know, and we'll do our best to get to your question soon!
 
-> **Note**
+> **Warning**
 > **Third time's a charm.**
 > Remember, this is an experiment from our design team. We’re doing this on the side, along with the rest of our normal work stuff, so please be patient if you don't get a reply right away. And if you find the plugin useful, please contribute! See our [contributing section](https://github.com/streamlit/figma-to-streamlit#contributing) below.
 
@@ -101,17 +101,41 @@ Ready? Let's go! 🚀
 
 ### Running the plugin locally
 
-This plugin uses Typescript and NPM, two standard tools in creating JavaScript applications.
+Below are the steps to get the plugin running in your machine. You can also find more detailed instructions in [Figma's setup guide](https://www.figma.com/plugin-docs/setup/).
 
-> **Note**
-> Below are the steps to get the plugin running in your machine. You can also find more detailed instructions in [Figma's setup guide](https://www.figma.com/plugin-docs/setup/).
+1. First, check if you have node installed on your machine by opening a terminal window and running:
 
-1. First, check if you have node installed on your machine by opening a terminal window and running `node -v`.
+```bash
+node -v
+```
+
 2. If the command above outputs a version number, then you can safely skip this step. If you don't get anything back, or get a `node command not found` error, you need to download Node.js which comes with NPM. This will allow you to install TypeScript and other libraries. You can find the download link [here](https://nodejs.org/en/download/).
-2. After installing Node, install Typescript by running `npm install -g typescript` in a terminal window.
-3. After you've installed these global libraries, you need to clone the repo in your working directory: `git clone https://github.com/streamlit/figma-to-streamlit`.
-4. Then, enter in the `figma-to-streamlit` directory by running `cd figma-to-streamlit`, and then run `npm install` to install the plugin's dependencies.
-5. After dependencies are installed, run `npm run dev` on your terminal, to build the plugin, and keep the process running while you develop to watch the files.
+3. After installing Node, install Typescript by running the following command in a terminal window:
+
+```bash
+npm install -g typescript
+```
+
+4. After you've installed these global libraries, you need to clone the repo in your working directory:
+
+```bash
+git clone https://github.com/streamlit/figma-to-streamlit
+```
+
+5. Then, enter the `figma-to-streamlit` directory and `npm install` the plugin's dependencies:
+
+```bash
+cd figma-to-streamlit
+npm install
+```
+
+6. After dependencies are installed, build the plugin by running:
+
+```bash
+npm run dev
+```
+
+Make sure to keep the process running while you are developing to automatically watch the files for changes.
 
 ### Loading the development version of the plugin in Figma
 
