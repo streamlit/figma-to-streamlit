@@ -55,14 +55,14 @@ The latest version of the plugin features support for the following widget categ
 
 We're evaluating/planning on adding support for the following in the future (in no particular order):
 
-#### New widgets
+#### More widgets
 * [Media elements](https://docs.streamlit.io/library/api-reference/media).
 * [Progress and Status](https://docs.streamlit.io/library/api-reference/status).
 * [Data display elements](https://docs.streamlit.io/library/api-reference/data).
 * [Layout and Containers](https://docs.streamlit.io/library/api-reference/layout).
 * [Control flow](https://docs.streamlit.io/library/api-reference/control-flow) (mainly `st.form` and `st.form_submit_button`.
 
-#### New variants/features
+#### More variants/features
 * `st.markdown`, recognizing **bold**, _italic_, underline and ~~strikethrough~~ text format.
 * `label_visibility` param modifier for input widgets.
 * Support for optional properties, such as `language` in `st.code`, `file_name` on `st.download_button`, amongst others.
