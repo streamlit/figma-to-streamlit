@@ -1379,8 +1379,8 @@ export const data = [
     "category": "charts",
     "name": "st.line_chart",
     "shouldUsePlaceholder": true,
-    "placeholderData": ["pd.DataFrame(np.random.randn(20, 3)", "columns=['a', 'b', 'c'])"],
-    "imports": ["import streamlit as st", "import pandas as pd", "import numpy as np"],
+    "placeholderData": ["# Enter your data below! Usually this is not a dict, but a Pandas Dataframe.", "data={'time': [0, 1, 2, 3, 4, 5, 6], 'stock_value': [100, 200, 150, 300, 450, 500, 600]}", "x='time'", "y='stock_value'"],
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "data",
@@ -1430,8 +1430,8 @@ export const data = [
     "category": "charts",
     "name": "st.area_chart",
     "shouldUsePlaceholder": true,
-    "placeholderData": ["pd.DataFrame(np.random.randn(20, 3)", "columns=['a', 'b', 'c'])"],
-    "imports": ["import streamlit as st", "import pandas as pd", "import numpy as np"],
+    "placeholderData": ["# Enter your data below! Usually this is not a dict, but a Pandas Dataframe.", "data={'time': [0, 1, 2, 3, 4, 5, 6], 'stock_value': [100, 200, 150, 300, 450, 500, 600]}", "x='time'", "y='stock_value'"],
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "data",
@@ -1481,8 +1481,8 @@ export const data = [
     "category": "charts",
     "name": "st.bar_chart",
     "shouldUsePlaceholder": true,
-    "placeholderData": ["pd.DataFrame(np.random.randn(50, 3)", "columns=['a', 'b', 'c'])"],
-    "imports": ["import streamlit as st", "import pandas as pd", "import numpy as np"],
+    "placeholderData": ["# Enter your data below! Usually this is not a dict, but a Pandas Dataframe.", "data={'time': [0, 1, 2, 3, 4, 5, 6], 'stock_value': [100, 200, 150, 300, 450, 500, 600]}", "x='time'", "y='stock_value'"],
+    "imports": ["import streamlit as st"],
     "parameters": [
       {
         "name": "data",
