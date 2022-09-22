@@ -60,7 +60,7 @@ We're evaluating/planning on adding support for the following in the future (in 
 * [Progress and Status](https://docs.streamlit.io/library/api-reference/status).
 * [Data display elements](https://docs.streamlit.io/library/api-reference/data).
 * [Layout and Containers](https://docs.streamlit.io/library/api-reference/layout).
-* [Control flow](https://docs.streamlit.io/library/api-reference/control-flow) (mainly `st.form` and `st.form_submit_button`.
+* [Control flow](https://docs.streamlit.io/library/api-reference/control-flow) (mainly `st.form` and `st.form_submit_button`).
 
 #### More variants/features
 * `st.markdown`, recognizing **bold**, _italic_, underline and ~~strikethrough~~ text format.
