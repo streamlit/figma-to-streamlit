@@ -32,20 +32,6 @@ export const generateMarkup = (widget: any) => {
     markupParams.push(formatParams('value-only', valueOnlyParams));
   }
 
-  // Let's now separate the booleans, since they behave differently
-  // than value params. We only grab those that:
-  // 1. Are key-value (like disabled=True);
-  // 2. Are booleans;
-  // 3. Have a "true" value (we don't do disabled=False since it's redundant).
-  const booleanParams = widget.parameters.filter((param: any) =>
-    param.keyValue === true && param.type === 'bool' && param.value === true
-  );
-
-  // After we got them, let's format'em here, so the code below doesn't get too messy
-  if(booleanParams.length) {
-    markupParams.push(formatParams('boolean', booleanParams));
-  }
-
   // Now, let's get integers. These should:
   // 1. be integers;
   // 2. have a value set;
@@ -70,6 +56,20 @@ export const generateMarkup = (widget: any) => {
   // Formatting function for key-value params
   if(keywordValueParams.length) {
     markupParams.push(formatParams('key-value', keywordValueParams));
+  }
+
+  // Let's now separate the booleans, since they behave differently
+  // than value params. We only grab those that:
+  // 1. Are key-value (like disabled=True);
+  // 2. Are booleans;
+  // 3. Have a "true" value (we don't do disabled=False since it's redundant).
+  const booleanParams = widget.parameters.filter((param: any) =>
+    param.keyValue === true && param.type === 'bool' && param.value === true
+  );
+
+  // After we got them, let's format'em here, so the code below doesn't get too messy
+  if(booleanParams.length) {
+    markupParams.push(formatParams('boolean', booleanParams));
   }
 
   // Ok, so at this point we _should_ have all the params we need in a nice array.
