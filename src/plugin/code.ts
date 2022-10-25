@@ -30,6 +30,8 @@ figma.ui.onmessage = msg => {
       if(!selectionExists) {
         throw new Error('Nothing selected. Pick a component instance to get its code.');
       } else {
+        const markupArray = [];
+
         // If there's a selection, check to see if it's valid selection
         for (const node of figma.currentPage.selection) {
           checkSelection(node);
@@ -72,11 +74,14 @@ figma.ui.onmessage = msg => {
             widgetWithMarkup = generateMarkup(widget);
           }
 
+          // After all this, push the markup to the final array
+          markupArray.push(widgetWithMarkup);
 
-          // After we got the data, update the plugin UI
-          resizeUI(300, 500);
-          dispatchUIMessage('success', 'Nice one! Find the code snippet below 👇🏻', widgetWithMarkup);
         };
+        
+        // And when we got the data, update the plugin UI
+        resizeUI(300, 500);
+        dispatchUIMessage('success', 'Nice one! Find the code snippet below 👇🏻', markupArray);
       }
       break;
   }

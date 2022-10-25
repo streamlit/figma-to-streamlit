@@ -10,6 +10,11 @@
   @apply inline-block mt-1 underline hover:no-underline;
 }
 
+.Separator {
+  border-top: 1px solid var(--figma-color-border);
+  @apply mx-4;
+}
+
 /* Specific colors for errors and success messages */
 .ErrorContainer {
   background-color: var(--figma-color-bg-danger);

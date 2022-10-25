@@ -6,10 +6,6 @@
   @apply p-4;
 }
 
-.DocsContainer {
-  @apply py-4;
-}
-
 .WidgetLink {
   @apply text-xs;
   color: var(--figma-color-bg-brand);

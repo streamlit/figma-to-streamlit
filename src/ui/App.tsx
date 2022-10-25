@@ -18,7 +18,7 @@ const App = () => {
         type,
         message,
         data
-      })
+      });
     }
   }, []);
 
