@@ -2,7 +2,7 @@
 
 ![file cover - 1](https://user-images.githubusercontent.com/34423371/191558995-f4466e38-03c6-4be2-9a46-9855d763413d.jpg)
 
-A plugin to generate `st.` commands with their corresponding parameters and values, based on the components from [our existing Figma Design System](https://www.figma.com/community/file/1166487643052288621).
+A plugin to generate `st.` commands with their corresponding parameters and values, based on the components from [our existing Figma Design System](https://www.figma.com/community/file/1166786573904778097).
 
 > **Warning**
 > **Heads up!**
@@ -14,7 +14,7 @@ Go to our [community profile](), select the plugin and hit `Try it out`. Then, i
 
 ## How to use the plugin
 
-This plugin is complementary to our [official Design System library](https://www.figma.com/community/file/1166487643052288621). Select a component instance, tweak its props and values, and hit `See my code` to get a code snippet you can use in your Streamlit app! Check out the video below to get a sense of how to use it 👇
+This plugin is complementary to our [official Design System library](https://www.figma.com/community/file/1166786573904778097). Select a component instance, tweak its props and values, and hit `See my code` to get a code snippet you can use in your Streamlit app! Check out the video below to get a sense of how to use it 👇
 
 https://user-images.githubusercontent.com/34423371/191323837-34a489a7-0534-49f7-b42f-1270ed1dc895.mov
 
@@ -24,7 +24,7 @@ If you are running into any errors while using the plugin, check out the tips be
 
 ### General Advice
 
-* Make sure you're using our [official Design System library](https://www.figma.com/community/file/1166487643052288621) to generate your code snippets.
+* Make sure you're using our [official Design System library](https://www.figma.com/community/file/1166786573904778097) to generate your code snippets.
 * Make sure to keep both the Design System library and the plugin up to date with the latest versions.
 * The plugin is tightly bound to the Figma library's naming convention and layer structure, so we advise you to _avoid renaming layers_. Of course, you can update text values, change variations, but make sure layer names remain untouched.
 * Make sure you are generating the code using component instances, and not from the main component. You can get a refresher on Figma's components and instances [here](https://help.figma.com/hc/en-us/articles/360039150173-Create-and-insert-component-instances).
