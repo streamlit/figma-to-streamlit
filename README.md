@@ -1,6 +1,6 @@
 # Figma to Streamlit plugin
 
-![file cover - 1](https://user-images.githubusercontent.com/34423371/191558995-f4466e38-03c6-4be2-9a46-9855d763413d.jpg)
+![Readme](https://user-images.githubusercontent.com/34423371/198327797-bca19428-b787-4d30-ac45-511f5805a5be.jpg)
 
 A plugin to generate `st.` commands with their corresponding parameters and values, based on the components from [our existing Figma Design System](https://www.figma.com/community/file/1166786573904778097).
 
