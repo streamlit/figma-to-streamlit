@@ -23,3 +23,8 @@
 .figma-light .token-line, .figma-light .token.punctuation {
   color: var(--figma-color-text-secondary) !important;
 }
+
+/* Dark mode Background */
+body {
+  background-color: var(--figma-color-bg);
+}
