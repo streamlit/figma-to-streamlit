@@ -10,7 +10,7 @@ A plugin to generate `st.` commands with their corresponding parameters and valu
 
 ## Installation
 
-Go to our [community profile](https://www.figma.com/@streamlit), select the plugin and hit `Try it out`. Then, in Figma, run it from the `Plugins` tab.
+Go to our [community profile](https://www.figma.com/@streamlit), [select the plugin](https://www.figma.com/community/plugin/1167469184805790690/Figma-to-Streamlit) and hit `Try it out`. Then, in Figma, run it from the `Plugins` tab.
 
 ## How to use the plugin
 
